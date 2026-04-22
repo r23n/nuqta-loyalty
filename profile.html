@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Edit your Nuqta profile.">
+
+  <title data-i18n="profile.meta">Profile — Nuqta</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400;500;600;700&family=Rubik:wght@300;400;500;600;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/main.css">
+
+  <script>
+    (function(){ try { var t=localStorage.getItem('nuqta_theme')||'dark'; document.documentElement.setAttribute('data-theme',t); } catch(e){} })();
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/supabase-client.js"></script>
+</head>
+<body>
+
+  <!-- ============ Navbar ============ -->
+  <nav class="navbar">
+    <div class="container nav-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-mark">◆</span>
+        <span data-i18n="brand.name">Nuqta</span>
+      </a>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="dashboard.html" data-i18n="nav.dashboard">لوحتي</a></li>
+        <li><a href="profile.html" class="active" data-i18n="nav.profile">My profile</a></li>
+        <li><a href="index.html#rewards" data-i18n="nav.rewards">Rewards</a></li>
+        <li><a href="transactions.html" data-i18n="nav.transactions">History</a></li>
+        <li><a href="learn.html" data-i18n="nav.learn">Earn more</a></li>
+        <li><a href="pricing.html" data-i18n="nav.pricing">Pricing</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="lang-switch" id="langSwitch" aria-label="Language">
+          <span class="lang-switch__current">ع</span>
+        </button>
+        <button class="theme-toggle" id="themeToggle" aria-label="Theme"></button>
+
+        <div class="nav-auth" data-auth="authed">
+          <a href="#" class="btn btn-ghost btn-nav" data-action="signout" data-i18n="dashboard.logout">Sign out</a>
+        </div>
+
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- ============ محتوى الصفحة ============ -->
+  <section class="profile-section">
+    <div class="container">
+
+      <div class="profile-head reveal">
+        <h1 class="page-title" style="font-size:clamp(32px,4vw,48px)">
+          <span data-i18n="profile.title">My profile</span>
+        </h1>
+        <p class="page-sub" style="margin:0" data-i18n="profile.sub">
+          Update your information and password
+        </p>
+      </div>
+
+
+      <!-- حالة التحميل -->
+      <div class="profile-loading" id="profileLoading">
+        <div class="skeleton skeleton-line" style="width:60%"></div>
+        <div class="skeleton skeleton-line" style="width:80%"></div>
+        <div class="skeleton skeleton-line" style="width:70%"></div>
+      </div>
+
+
+      <!-- المحتوى الفعلي (يظهر بعد التحميل) -->
+      <div class="profile-content" id="profileContent" style="display:none">
+
+
+        <!-- ================= بطاقة المعلومات الشخصية ================= -->
+        <div class="profile-card reveal">
+          <div class="profile-card-head">
+            <h2 class="profile-card-title" data-i18n="profile.personal.title">Personal information</h2>
+            <p class="profile-card-sub" data-i18n="profile.personal.sub">Your name, email and phone</p>
+          </div>
+
+          <div class="form-group">
+            <label for="profileName" data-i18n="signup.s1.name">Full name</label>
+            <input type="text" id="profileName" class="form-input" data-no-translate dir="ltr">
+            <div class="form-error"></div>
+          </div>
+
+          <div class="form-group">
+            <label for="profileEmail" data-i18n="signup.s1.email">Email</label>
+            <input type="email" id="profileEmail" class="form-input" readonly
+                   data-no-translate dir="ltr">
+            <div class="form-hint" data-i18n="profile.email.hint">
+              Email cannot be changed for security.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="profilePhone" data-i18n="signup.s1.phone">Phone number</label>
+            <input type="tel" id="profilePhone" class="form-input" data-no-translate dir="ltr">
+            <div class="form-error"></div>
+          </div>
+
+          <button class="btn btn-primary" id="btnSavePersonal" data-i18n="profile.save">
+            Save changes
+          </button>
+        </div>
+
+
+        <!-- ================= بطاقة الاهتمامات ================= -->
+        <div class="profile-card reveal">
+          <div class="profile-card-head">
+            <h2 class="profile-card-title" data-i18n="profile.interests.title">Interests</h2>
+            <p class="profile-card-sub" data-i18n="profile.interests.sub">
+              What you love to shop — helps us personalize your offers
+            </p>
+          </div>
+
+          <div class="interest-tags" id="profileInterests">
+            <button class="interest-tag" type="button" data-tag="Fashion" data-i18n="signup.s2.t1">أزياء</button>
+            <button class="interest-tag" type="button" data-tag="Electronics" data-i18n="signup.s2.t2">إلكترونيات</button>
+            <button class="interest-tag" type="button" data-tag="Restaurants" data-i18n="signup.s2.t3">مطاعم</button>
+            <button class="interest-tag" type="button" data-tag="Beauty & care" data-i18n="signup.s2.t4">جمال وعناية</button>
+            <button class="interest-tag" type="button" data-tag="Travel" data-i18n="signup.s2.t5">سفر</button>
+            <button class="interest-tag" type="button" data-tag="Sports" data-i18n="signup.s2.t6">رياضة</button>
+            <button class="interest-tag" type="button" data-tag="Home & furniture" data-i18n="signup.s2.t7">مفروشات</button>
+            <button class="interest-tag" type="button" data-tag="Entertainment" data-i18n="signup.s2.t8">ترفيه</button>
+            <button class="interest-tag" type="button" data-tag="Groceries" data-i18n="signup.s2.t9">بقالة</button>
+          </div>
+
+          <button class="btn btn-primary" id="btnSaveInterests" style="margin-top:20px" data-i18n="profile.save">
+            Save changes
+          </button>
+        </div>
+
+
+        <!-- ================= بطاقة كلمة السر ================= -->
+        <div class="profile-card reveal">
+          <div class="profile-card-head">
+            <h2 class="profile-card-title" data-i18n="profile.password.title">Change password</h2>
+            <p class="profile-card-sub" data-i18n="profile.password.sub">
+              Pick a new strong password
+            </p>
+          </div>
+
+          <div class="form-group">
+            <label for="profileNewPwd" data-i18n="reset.new">New password</label>
+            <input type="password" id="profileNewPwd" class="form-input"
+                   placeholder="At least 6 characters"
+                   data-i18n-placeholder="signup.s1.password.ph"
+                   autocomplete="new-password">
+            <div class="form-error"></div>
+          </div>
+
+          <div class="form-group">
+            <label for="profileConfirmPwd" data-i18n="reset.confirm">Confirm password</label>
+            <input type="password" id="profileConfirmPwd" class="form-input"
+                   placeholder="Repeat your password"
+                   data-i18n-placeholder="reset.confirm.ph"
+                   autocomplete="new-password">
+            <div class="form-error"></div>
+          </div>
+
+          <button class="btn btn-primary" id="btnSavePassword" data-i18n="profile.password.submit">
+            Update password
+          </button>
+        </div>
+
+
+        <!-- ================= بطاقة الدعوة وQR ================= -->
+        <div class="profile-card reveal">
+          <div class="profile-card-head">
+            <h2 class="profile-card-title" data-i18n="profile.invite.title">Invite & share</h2>
+            <p class="profile-card-sub" data-i18n="profile.invite.sub">
+              Share your code with friends — both of you earn 200 points when they sign up
+            </p>
+          </div>
+
+          <div class="invite-wrap">
+
+            <!-- QR Code -->
+            <div class="invite-qr">
+              <div class="invite-qr-frame" id="qrContainer">
+                <div class="qr-loading">…</div>
+              </div>
+              <button class="btn btn-ghost btn-sm" id="btnDownloadQR" data-i18n="profile.invite.download">
+                Download QR
+              </button>
+            </div>
+
+            <!-- الكود وروابط المشاركة -->
+            <div class="invite-info">
+              <div class="invite-row">
+                <label class="invite-label" data-i18n="profile.invite.code">Your referral code</label>
+                <div class="invite-code-box">
+                  <code id="referralCode" data-no-translate dir="ltr">—</code>
+                  <button class="invite-copy-btn" id="btnCopyCode" title="Copy" data-i18n-title="profile.invite.copy">
+                    📋
+                  </button>
+                </div>
+              </div>
+
+              <div class="invite-row">
+                <label class="invite-label" data-i18n="profile.invite.link">Share link</label>
+                <div class="invite-code-box">
+                  <code id="referralLink" data-no-translate dir="ltr">—</code>
+                  <button class="invite-copy-btn" id="btnCopyLink" title="Copy" data-i18n-title="profile.invite.copy">
+                    📋
+                  </button>
+                </div>
+              </div>
+
+              <div class="invite-actions">
+                <a href="#" id="btnShareWhatsApp" class="btn btn-primary btn-sm" target="_blank" rel="noopener">
+                  <span>💬</span>
+                  <span data-i18n="profile.invite.whatsapp">Share on WhatsApp</span>
+                </a>
+                <button class="btn btn-ghost btn-sm" id="btnShareNative" data-i18n="profile.invite.more">
+                  More options
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- قسم "من انضم بدعوتك" -->
+          <div class="invites-list-section" id="invitesSection">
+            <h3 class="invites-list-title">
+              <span data-i18n="profile.invite.my.title">My invitees</span>
+              <span class="invites-count" id="invitesCount">0</span>
+            </h3>
+            <div class="invites-list" id="invitesList">
+              <p class="invites-empty" data-i18n="profile.invite.my.empty">
+                No one has joined with your code yet. Share it to start earning!
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+
+        <!-- ================= بطاقة الأوسمة ================= -->
+        <div class="profile-card reveal">
+          <div class="profile-card-head">
+            <h2 class="profile-card-title" data-i18n="profile.badges.title">Achievements</h2>
+            <p class="profile-card-sub">
+              <span data-i18n="profile.badges.sub">Your earned badges</span>
+              <span class="badge-count" id="badgeCount"></span>
+            </p>
+          </div>
+
+          <div class="badges-grid" id="badgesGrid">
+            <!-- يملأها profile.js -->
+          </div>
+        </div>
+
+
+        <!-- ================= منطقة الخطر (حذف الحساب) ================= -->
+        <div class="profile-card profile-card--danger reveal">
+          <div class="profile-card-head">
+            <h2 class="profile-card-title" data-i18n="profile.danger.title">Danger zone</h2>
+            <p class="profile-card-sub" data-i18n="profile.danger.sub">
+              Sign out from all devices or delete your account permanently
+            </p>
+          </div>
+
+          <button class="btn btn-ghost" id="btnSignoutAll" data-i18n="profile.signout.all">
+            Sign out
+          </button>
+        </div>
+
+
+      </div><!-- /profile-content -->
+
+
+    </div>
+  </section>
+
+
+  <!-- السكربتات -->
+  <script src="js/translations.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/user.js"></script>
+  <script src="js/qr.js"></script>
+  <script src="js/referral.js"></script>
+  <script src="js/auth-ui.js"></script>
+  <script src="js/toast.js"></script>
+  <script src="js/confetti.js"></script>
+  <script src="js/achievements.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/profile.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

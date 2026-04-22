@@ -1,0 +1,921 @@
+/* ============================================================
+   pages/dashboard.css
+   ------------------------------------------------------------
+   أنماط خاصة بصفحة لوحة التحكم (dashboard.html).
+   تشمل: الترحيب، بطاقة الرصيد، شريط التقدم، الإحصائيات،
+   جدول المعاملات، ومكافآت موصى بها.
+   ============================================================ */
+
+
+/* ============================================================
+   قسم الترحيب
+   ============================================================ */
+.dashboard-hero {
+  padding: 140px 0 40px;
+}
+
+.dashboard-welcome {
+  margin-bottom: var(--space-lg);
+}
+
+.dashboard-welcome-title {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 4.5vw, 52px);
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 8px;
+  letter-spacing: -0.02em;
+}
+
+/* صف يجمع "عضو ذهبي منذ ٢٠٢٤" مع شارة الباقة */
+.dashboard-welcome-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.dashboard-welcome-sub {
+  color: var(--gold);
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+/* شارة الباقة الحالية (Free / Premium / VIP) */
+.plan-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 14px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-bright));
+  color: var(--ink);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+
+/* ============================================================
+   شاشة فارغة (حساب جديد بدون معاملات)
+   ============================================================ */
+.empty-state {
+  padding: 60px 32px;
+  text-align: center;
+  color: var(--cream-dim);
+}
+
+.empty-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 24px;
+  border-radius: 50%;
+  background: rgba(201, 169, 97, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gold);
+}
+
+.empty-state h3 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--cream);
+  margin-bottom: 10px;
+}
+
+.empty-state p {
+  max-width: 400px;
+  margin: 0 auto 24px;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+
+/* ============================================================
+   الشبكة الرئيسية (رصيد + تقدّم)
+   ============================================================ */
+.dashboard-main-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 24px;
+  margin-bottom: var(--space-xl);
+}
+
+
+/* ============================================================
+   بطاقة الرصيد
+   ============================================================ */
+.balance-card {
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  position: relative;
+  box-shadow: var(--shadow-card);
+}
+
+.balance-card-bg {
+  padding: 40px;
+  background: linear-gradient(135deg, var(--wine) 0%, #3a1118 60%, var(--ink) 100%);
+  color: var(--cream);
+  position: relative;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.balance-card-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 80% 20%, rgba(201, 169, 97, 0.2) 0%, transparent 50%),
+    radial-gradient(circle at 20% 90%, rgba(230, 198, 129, 0.12) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.balance-card-bg > * {
+  position: relative;
+  z-index: 1;
+}
+
+.balance-card-bg .card-chip {
+  margin-bottom: 0;
+}
+
+.balance-card-bg .card-label {
+  color: rgba(244, 234, 213, 0.7);
+}
+
+.balance-amount {
+  font-family: var(--font-display);
+  font-size: clamp(56px, 8vw, 88px);
+  font-weight: 700;
+  color: var(--gold-bright);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  margin: 8px 0 4px;
+}
+
+.balance-unit {
+  font-family: var(--font-accent);
+  font-size: 20px;
+  font-style: italic;
+  color: var(--gold);
+}
+
+.balance-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  gap: 12px;
+}
+
+.card-tier-big {
+  padding: 8px 20px;
+  background: rgba(201, 169, 97, 0.2);
+  border: 1px solid var(--gold);
+  border-radius: var(--radius-pill);
+  color: var(--gold-bright);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+}
+
+/* زر صغير */
+.btn-sm {
+  padding: 10px 20px;
+  font-size: 14px;
+}
+
+.btn-full {
+  width: 100%;
+  display: flex;
+}
+
+
+/* ============================================================
+   بطاقة التقدم للمستوى التالي
+   ============================================================ */
+.progress-card {
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.progress-card-title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--cream);
+  margin-bottom: 24px;
+}
+
+.progress-tiers {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.progress-tier-mark {
+  font-size: 13px;
+  color: var(--cream-faint);
+  letter-spacing: 0.5px;
+}
+
+.progress-tier-mark.is-current {
+  color: var(--gold);
+  font-weight: 600;
+}
+
+.dashboard-progress-bar {
+  width: 100%;
+  height: 14px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.dashboard-progress-fill {
+  height: 100%;
+  width: 0; /* يبدأ من صفر، JS يوسّعه */
+  background: linear-gradient(90deg, var(--copper), var(--gold), var(--gold-bright));
+  border-radius: var(--radius-pill);
+  transition: width 2s cubic-bezier(0.25, 1, 0.5, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.dashboard-progress-fill::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: shimmer 2.5s infinite;
+  will-change: transform;
+}
+
+@keyframes shimmer {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.progress-card-footer {
+  text-align: start;
+}
+
+.progress-remaining-label {
+  font-size: 14px;
+  color: var(--cream-dim);
+  line-height: 1.6;
+}
+
+.progress-remaining-label #remainingPoints {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+
+
+/* ============================================================
+   الإحصائيات السريعة
+   ============================================================ */
+.stats-mini-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.stat-mini {
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  text-align: center;
+  transition: all var(--transition-fast);
+}
+
+.stat-mini:hover {
+  border-color: rgba(201, 169, 97, 0.3);
+  transform: translateY(-2px);
+}
+
+.stat-mini-num {
+  font-family: var(--font-display);
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.stat-mini-label {
+  color: var(--cream-dim);
+  font-size: 13px;
+}
+
+
+/* ============================================================
+   رأس قسم (panel head)
+   ============================================================ */
+.panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-md);
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.panel-title {
+  font-family: var(--font-display);
+  font-size: clamp(26px, 3vw, 36px);
+  font-weight: 600;
+  color: var(--cream);
+}
+
+.panel-link {
+  color: var(--gold);
+  text-decoration: none;
+  font-size: 14px;
+  transition: color var(--transition-fast);
+}
+
+.panel-link:hover {
+  color: var(--gold-bright);
+}
+
+
+/* ============================================================
+   جدول المعاملات
+   ============================================================ */
+.transactions {
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.transaction {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  align-items: center;
+  padding: 20px 28px;
+  border-bottom: 1px solid var(--line);
+  transition: background var(--transition-fast);
+  gap: 16px;
+}
+
+.transaction:last-child {
+  border-bottom: none;
+}
+
+.transaction:hover {
+  background: rgba(244, 234, 213, 0.02);
+}
+
+.tx-store {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.tx-logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--gold), var(--copper));
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.tx-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--cream);
+  font-size: 16px;
+}
+
+.tx-date {
+  font-size: 12px;
+  color: var(--cream-faint);
+  margin-top: 2px;
+}
+
+.tx-amount {
+  color: var(--cream-dim);
+  font-size: 14px;
+}
+
+.tx-points {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--gold);
+  text-align: end;
+}
+
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+@media (max-width: 968px) {
+  .dashboard-main-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stats-mini-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .balance-card-bg {
+    padding: 32px 24px;
+  }
+
+  .progress-card {
+    padding: 28px 24px;
+  }
+
+  .transaction {
+    padding: 16px 20px;
+    grid-template-columns: 2fr 1fr;
+  }
+
+  .tx-amount {
+    display: none; /* إخفاء المبلغ في الشاشات الصغيرة */
+  }
+
+  .tx-logo {
+    width: 38px;
+    height: 38px;
+    font-size: 16px;
+  }
+
+  .dashboard-hero {
+    padding-top: 110px;
+  }
+}
+
+
+/* ============================================================
+   إشعارات داخل Dashboard
+   ============================================================ */
+.notifications {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: var(--space-lg);
+}
+
+.notifications:empty {
+  display: none;
+}
+
+.notif {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 24px;
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  position: relative;
+  animation: notif-slide-in 0.4s ease;
+}
+
+@keyframes notif-slide-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.notif.is-leaving {
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: all 0.3s ease;
+}
+
+/* الأيقونة (إيموجي كبيرة) */
+.notif-icon {
+  flex-shrink: 0;
+  font-size: 28px;
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(201, 169, 97, 0.08);
+}
+
+.notif-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.notif-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--cream);
+  margin-bottom: 4px;
+}
+
+.notif-msg {
+  color: var(--cream-dim);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.notif-action {
+  flex-shrink: 0;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-bright));
+  color: var(--ink);
+  border-radius: var(--radius-pill);
+  font-weight: 600;
+  font-size: 13px;
+  text-decoration: none;
+  transition: transform 0.2s;
+  white-space: nowrap;
+}
+
+.notif-action:hover {
+  transform: translateY(-1px);
+}
+
+.notif-close {
+  flex-shrink: 0;
+  background: transparent;
+  border: none;
+  color: var(--cream-faint);
+  font-size: 20px;
+  line-height: 1;
+  padding: 4px 8px;
+  cursor: pointer;
+  transition: color 0.2s;
+  align-self: start;
+}
+
+.notif-close:hover {
+  color: var(--cream);
+}
+
+/* أنواع */
+.notif--info .notif-icon    { background: rgba(201, 169, 97, 0.12); }
+.notif--warning .notif-icon { background: rgba(232, 181, 76, 0.15); }
+.notif--success .notif-icon { background: rgba(86, 194, 126, 0.15); }
+
+.notif--warning { border-color: rgba(232, 181, 76, 0.25); }
+.notif--success { border-color: rgba(86, 194, 126, 0.25); }
+
+
+/* Mobile */
+@media (max-width: 600px) {
+  .notif {
+    padding: 14px 16px;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .notif-icon {
+    width: 44px;
+    height: 44px;
+    font-size: 22px;
+  }
+
+  .notif-title { font-size: 14px; }
+  .notif-msg   { font-size: 13px; }
+
+  .notif-action {
+    order: 3;
+    width: 100%;
+    text-align: center;
+    margin-top: 8px;
+  }
+}
+
+
+/* ============================================================
+   Analytics Section
+   ============================================================ */
+.analytics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.analytics-card {
+  padding: 24px 22px;
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  transition: border-color 0.2s;
+}
+
+.analytics-card:hover {
+  border-color: rgba(201, 169, 97, 0.3);
+}
+
+.analytics-icon {
+  font-size: 28px;
+  line-height: 1;
+  margin-bottom: 12px;
+}
+
+.analytics-label {
+  color: var(--cream-faint);
+  font-size: 12px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.analytics-value {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--cream);
+  line-height: 1.2;
+  margin-bottom: 4px;
+  word-break: break-word;
+}
+
+.analytics-value--gold {
+  color: var(--gold-bright);
+}
+
+.analytics-unit {
+  font-size: 14px;
+  color: var(--cream-faint);
+  font-weight: 500;
+  margin-inline-start: 4px;
+}
+
+.analytics-meta {
+  color: var(--cream-faint);
+  font-size: 12px;
+}
+
+.analytics-meta span {
+  color: var(--cream-dim);
+  font-weight: 500;
+}
+
+
+/* Mobile */
+@media (max-width: 600px) {
+  .analytics-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .analytics-card {
+    padding: 18px 14px;
+  }
+  .analytics-value {
+    font-size: 20px;
+  }
+}
+
+
+/* ============================================================
+   قسم التحدّيات
+   ============================================================ */
+.challenges-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.challenge-card {
+  padding: 20px 22px;
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  position: relative;
+  transition: border-color 0.2s;
+}
+
+.challenge-card:hover {
+  border-color: rgba(201, 169, 97, 0.3);
+}
+
+.challenge-card--done {
+  border-color: rgba(86, 194, 126, 0.4);
+  background: linear-gradient(135deg, rgba(86, 194, 126, 0.05), var(--bg-soft));
+}
+
+.challenge-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.challenge-icon {
+  font-size: 32px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.challenge-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.challenge-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--cream);
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+
+.challenge-desc {
+  color: var(--cream-dim);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.challenge-reward {
+  padding: 4px 10px;
+  background: rgba(201, 169, 97, 0.12);
+  color: var(--gold);
+  font-family: var(--font-display);
+  font-weight: 700;
+  border-radius: var(--radius-pill);
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+.challenge-card--done .challenge-reward {
+  background: rgba(86, 194, 126, 0.15);
+  color: #56c27e;
+}
+
+.challenge-progress-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.challenge-progress-bar {
+  flex: 1;
+  height: 8px;
+  background: var(--bg);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.challenge-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold), var(--gold-bright));
+  border-radius: 4px;
+  transition: width 0.6s ease;
+}
+
+.challenge-card--done .challenge-progress-fill {
+  background: linear-gradient(90deg, #56c27e, #7dd89e);
+}
+
+.challenge-progress-text {
+  font-size: 12px;
+  color: var(--cream-faint);
+  font-family: var(--font-display);
+  font-weight: 600;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.challenge-done-tag {
+  margin-top: 10px;
+  display: inline-block;
+  padding: 4px 12px;
+  background: rgba(86, 194, 126, 0.15);
+  color: #56c27e;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .challenges-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .challenge-card {
+    padding: 16px 18px;
+  }
+
+  .challenge-icon {
+    font-size: 26px;
+  }
+
+  .challenge-title {
+    font-size: 15px;
+  }
+}
+
+
+/* ============================================================
+   تخصيص padding للـ sections داخل Dashboard
+   ------------------------------------------------------------
+   الـ --space-2xl (120px) مصمّم للصفحة الرئيسية التسويقية،
+   لكن Dashboard صفحة تطبيق — نخفّض padding بشكل كبير
+   لتكون التجربة أكثر كثافة ولا نترك فراغات ضخمة.
+   ============================================================ */
+
+/* الأقسام داخل Dashboard تكون بـ padding أقل */
+.dashboard-hero ~ .section {
+  padding: 40px 0;
+}
+
+/* أقسام فرعية داخل .section (Challenges / Analytics) */
+.dash-sub-section {
+  margin-bottom: 32px;
+}
+
+/* حالة "مخفي" لقسم فرعي — يأخذ صفر مساحة */
+.dash-sub-section--hidden {
+  display: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .dashboard-hero ~ .section {
+    padding: 24px 0;
+  }
+
+  .dash-sub-section {
+    margin-bottom: 24px;
+  }
+}
+
+
+/* ============================================================
+   نجوم المستويات في progress-tier
+   ============================================================ */
+.tier-stars {
+  display: inline-flex;
+  gap: 2px;
+  font-size: 18px;
+  letter-spacing: 2px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-bright));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: normal;
+  line-height: 1;
+}
+
+/* المستوى الأعلى (البلاتيني) — ٤ نجوم ببريق خاص */
+.tier-stars--max {
+  background: linear-gradient(135deg, var(--gold-bright), #FFE082, var(--gold));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 4px rgba(201, 169, 97, 0.4));
+  animation: star-shine 2.5s ease-in-out infinite;
+}
+
+@keyframes star-shine {
+  0%, 100% { filter: drop-shadow(0 0 4px rgba(201, 169, 97, 0.4)); }
+  50%      { filter: drop-shadow(0 0 10px rgba(201, 169, 97, 0.7)); }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .tier-stars {
+    font-size: 15px;
+    letter-spacing: 1.5px;
+  }
+}

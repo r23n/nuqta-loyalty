@@ -1,0 +1,108 @@
+/* ============================================================
+   animations.css
+   ------------------------------------------------------------
+   كل تعريفات الـ @keyframes وكلاسات الظهور عند التمرير.
+   مفصولة هنا لسهولة إدارتها وتعديلها.
+   ============================================================ */
+
+
+/* ============================================================
+   Keyframes
+   ============================================================ */
+
+/* نبضة خفيفة - تُستخدم في النقطة بجانب eyebrow */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.4; }
+}
+
+/* عوم بطيء مع الحفاظ على الدوران - لبطاقة الولاء */
+@keyframes float {
+  0%, 100% { transform: rotate(-4deg) translateY(0); }
+  50%      { transform: rotate(-4deg) translateY(-12px); }
+}
+
+/* عوم بسيط بدون دوران - للإحصائيات العائمة */
+@keyframes float-gentle {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+
+/* تمرير أفقي مستمر - للشريط المتحرك (Marquee) */
+@keyframes scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(50%); }
+}
+
+
+/* ============================================================
+   Scroll Reveal
+   ------------------------------------------------------------
+   أي عنصر عليه كلاس .reveal يكون مخفياً في البداية،
+   وعند إضافة كلاس .visible (من خلال JS) يظهر بشكل متدرّج.
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all var(--transition-reveal);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* ============================================================
+   تحسين الأداء: إيقاف الأنيميشنات لو العنصر غير مرئي
+   أو لو المستخدم يفضّل حركة أقل
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* إيقاف skeletons لو غير مرئية */
+.skeleton:not(:hover) {
+  will-change: auto;
+}
+
+/* ============================================================
+   إيقاف الأنيميشنات الثقيلة عند فتح modal
+   ============================================================ */
+body.modal-open .dashboard-progress-fill::after,
+body.modal-open .tier-progress-fill::after,
+body.modal-open .marquee-track,
+body.modal-open .skeleton,
+body.modal-open .reading-progress-fill {
+  animation-play-state: paused !important;
+}
+
+/* استخدام GPU للأنيميشنات (transform و opacity فقط) */
+.marquee-track,
+.floating-stat,
+.card-wrap,
+.dashboard-progress-fill,
+.tier-progress-fill {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* توقف marquee لو مخفي */
+.marquee:not(:hover) .marquee-track {
+  animation-play-state: running;
+}
+
+/* توقف أي أنيميشن لو الصفحة مخفية (tab في الخلفية) */
+@media (prefers-reduced-motion: no-preference) {
+  body.page-hidden * {
+    animation-play-state: paused !important;
+  }
+}

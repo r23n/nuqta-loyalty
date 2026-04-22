@@ -1,0 +1,118 @@
+/* ============================================================
+   variables.css
+   ------------------------------------------------------------
+   متغيرات التصميم (Design Tokens).
+   عدّل قيمة واحدة هنا وستنعكس على كل الموقع.
+   ============================================================ */
+
+:root {
+  /* ---------- الألوان الأساسية ---------- */
+  --bg: #0E0B08;
+  --bg-soft: #1A1512;
+  --bg-elevated: #221913;
+
+  /* ---------- ألوان النصوص ---------- */
+  --cream: #F4EAD5;
+  --cream-dim: #D9CDB4;
+  --cream-faint: #8A8273;
+
+  /* ---------- ألوان العلامة ---------- */
+  --gold: #C9A961;
+  --gold-bright: #E6C681;
+  --copper: #B87333;
+  --wine: #6B1F2E;
+  --ink: #2C1810;
+
+  /* ---------- حدود ---------- */
+  --line: rgba(244, 234, 213, 0.12);
+  --line-strong: rgba(244, 234, 213, 0.2);
+
+  /* ---------- الخطوط ---------- */
+  --font-display: 'Reem Kufi', serif;
+  --font-body: 'Rubik', sans-serif;
+  --font-accent: 'Amiri', serif;
+  --font-fraunces: 'Fraunces', serif;
+
+  /* ---------- نصف الأقطار ---------- */
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --radius-pill: 100px;
+
+  /* ---------- المسافات ---------- */
+  --space-xs: 8px;
+  --space-sm: 16px;
+  --space-md: 24px;
+  --space-lg: 40px;
+  --space-xl: 80px;
+  --space-2xl: 120px;
+
+  /* ---------- الحاوية ---------- */
+  --container-max: 1280px;
+  --container-padding: 32px;
+
+  /* ---------- الظلال ---------- */
+  --shadow-card: 0 50px 100px rgba(0, 0, 0, 0.5);
+  --shadow-btn: 0 10px 30px rgba(201, 169, 97, 0.2);
+  --shadow-btn-hover: 0 15px 40px rgba(201, 169, 97, 0.35);
+  --shadow-glow: 0 0 40px rgba(201, 169, 97, 0.5);
+
+  /* ---------- الانتقالات ---------- */
+  --transition-fast: 0.3s ease;
+  --transition-slow: 0.4s ease;
+  --transition-reveal: 0.8s ease;
+  --transition-theme: 0.4s ease;
+}
+
+
+/* ============================================================
+   الوضع الفاتح (Light Mode)
+   ------------------------------------------------------------
+   يُفعَّل عبر data-theme="light" على الـ <html>.
+   نعيد تعريف نفس المتغيرات بقيم فاتحة.
+   الذهبي والنبيذي يبقون كما هم (ألوان العلامة).
+   ============================================================ */
+[data-theme="light"] {
+  --bg: #FAF5E8;
+  --bg-soft: #FFFFFF;
+  --bg-elevated: #F4EAD5;
+
+  --cream: #2C1810;
+  --cream-dim: #5C3A1F;
+  --cream-faint: #8B6F47;
+
+  --ink: #F4EAD5;
+
+  --line: rgba(44, 24, 16, 0.12);
+  --line-strong: rgba(44, 24, 16, 0.22);
+
+  --shadow-card: 0 30px 80px rgba(107, 31, 46, 0.15);
+  --shadow-btn: 0 10px 30px rgba(201, 169, 97, 0.35);
+  --shadow-btn-hover: 0 15px 40px rgba(201, 169, 97, 0.5);
+  --shadow-glow: 0 0 40px rgba(201, 169, 97, 0.3);
+}
+
+
+/* ============================================================
+   انتقال ناعم عند تبديل الوضع
+   ============================================================ */
+html,
+body,
+.navbar,
+.btn,
+.section,
+.stats-section,
+.footer,
+.tier,
+.reward-card,
+.step,
+.pricing-card,
+.calc-result,
+.calculator-inner,
+.faq-item,
+.compare-table {
+  transition: background-color var(--transition-theme),
+              color var(--transition-theme),
+              border-color var(--transition-theme);
+}

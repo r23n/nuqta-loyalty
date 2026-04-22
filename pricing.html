@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="باقات العضوية في نُقطة — اختر ما يناسبك.">
+
+  <title data-i18n="pricing.meta">الباقات — نُقطة</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400;500;600;700&family=Rubik:wght@300;400;500;600;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/main.css">
+
+  <!-- تطبيق الوضع مبكراً لتجنّب الوميض -->
+  <script>
+    (function(){ try { var t=localStorage.getItem('nuqta_theme')||'dark'; document.documentElement.setAttribute('data-theme',t); } catch(e){} })();
+  </script>
+  <!-- Supabase SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+  <script src="js/supabase-client.js"></script>
+</head>
+<body>
+
+  <!-- مؤشر القراءة العلوي -->
+  <div class="reading-progress">
+    <div class="reading-progress-fill"></div>
+  </div>
+
+  <!-- ============ شريط التنقل ============ -->
+  <nav class="navbar">
+    <div class="container nav-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-mark">◆</span>
+        <span data-i18n="brand.name">نُقطة</span>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html#how" data-i18n="nav.how">كيف يعمل</a></li>
+        <li><a href="index.html#rewards" data-i18n="nav.rewards">المكافآت</a></li>
+        <li><a href="index.html#tiers" data-i18n="nav.tiers">المستويات</a></li>
+        <li><a href="pricing.html" class="active" data-i18n="nav.pricing">الباقات</a></li>
+        <li><a href="index.html#faq" data-i18n="nav.faq">الأسئلة</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="lang-switch" id="langSwitch" aria-label="Language">
+          <span class="lang-switch__current">ع</span>
+        </button>
+        <button class="theme-toggle" id="themeToggle" aria-label="Theme"></button>
+                <!-- حالة الزائر (غير مسجّل) -->
+        <div class="nav-auth" data-auth="anon">
+          <a href="login.html" class="btn btn-ghost btn-nav" data-i18n="cta.signin">Sign in</a>
+          <a href="signup.html" class="btn btn-primary btn-nav" data-i18n="cta.join">Join now</a>
+        </div>
+
+        <!-- حالة المسجّل -->
+        <div class="nav-auth" data-auth="authed" style="display:none">
+          <a href="dashboard.html" class="btn btn-ghost btn-nav" data-i18n="nav.my.dashboard">My dashboard</a>
+          <a href="#" class="btn btn-primary btn-nav" data-action="signout" data-i18n="dashboard.logout">Sign out</a>
+        </div>
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- ============ رأس الصفحة ============ -->
+  <section class="page-hero">
+    <div class="container">
+      <div class="page-hero-content reveal">
+        <span class="eyebrow" data-i18n="pricing.eyebrow">باقات العضوية</span>
+        <h1 class="page-title">
+          <span data-i18n="pricing.title.1">الباقة المثالية</span>
+          <span class="italic" data-i18n="pricing.title.2">تنتظرك</span>
+        </h1>
+        <p class="page-sub" data-i18n="pricing.sub">
+          اختر ما يناسب نمط تسوّقك. كل الباقات تتضمّن ضمان استرداد خلال ٣٠ يوماً.
+        </p>
+
+        <!-- مبدّل الفوترة -->
+        <div class="billing-toggle">
+          <button class="billing-btn active" data-billing="monthly" data-i18n="pricing.monthly">شهري</button>
+          <button class="billing-btn" data-billing="yearly" data-i18n="pricing.yearly">سنوي</button>
+          <span class="billing-badge" data-i18n="pricing.save">وفّر ٢٠٪</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============ بطاقات الباقات ============ -->
+  <section class="pricing-section">
+    <div class="container">
+      <div class="pricing-grid">
+
+        <!-- الباقة المجانية -->
+        <article class="pricing-card reveal">
+          <div class="pricing-card-head">
+            <h3 data-i18n="pricing.free.name">الأساسية</h3>
+            <p data-i18n="pricing.free.tag">للبداية مع نُقطة</p>
+          </div>
+
+          <div class="pricing-price">
+            <span class="pricing-currency" data-i18n="pricing.currency">ر.س</span>
+            <span class="pricing-amount">٠</span>
+            <span class="pricing-period" data-i18n="pricing.forever">للأبد</span>
+          </div>
+
+          <a href="#" class="btn btn-ghost pricing-cta" data-plan="free" data-i18n="pricing.free.cta">ابدأ مجاناً</a>
+
+          <div class="pricing-divider"></div>
+
+          <ul class="pricing-features">
+            <li data-i18n="pricing.free.f1">نقطة لكل دينار تُنفقه</li>
+            <li data-i18n="pricing.free.f2">الوصول إلى ٣٢٠+ متجر شريك</li>
+            <li data-i18n="pricing.free.f3">كتالوج المكافآت الأساسي</li>
+            <li data-i18n="pricing.free.f4">تطبيق للهاتف المحمول</li>
+            <li data-i18n="pricing.free.f5">دعم عبر البريد الإلكتروني</li>
+          </ul>
+        </article>
+
+        <!-- الباقة المميزة (الأكثر شعبية) -->
+        <article class="pricing-card pricing-card--featured reveal">
+          <div class="pricing-badge" data-i18n="pricing.popular">الأكثر شعبية</div>
+          <div class="pricing-card-head">
+            <h3 data-i18n="pricing.pro.name">المميّزة</h3>
+            <p data-i18n="pricing.pro.tag">لمن يتسوّق بانتظام</p>
+          </div>
+
+          <div class="pricing-price">
+            <span class="pricing-currency" data-i18n="pricing.currency">ر.س</span>
+            <span class="pricing-amount" data-price-monthly="5" data-price-yearly="4">5</span>
+            <span class="pricing-period" data-i18n="pricing.month">/شهرياً</span>
+          </div>
+          <div class="pricing-save" data-billing-only="yearly">
+            <span data-i18n="pricing.save.yearly">تدفع ٤٨ سنوياً — وفّر ١٢ د.ب</span>
+          </div>
+
+          <a href="#" class="btn btn-primary pricing-cta" data-plan="pro" data-i18n="pricing.pro.cta">اشترك الآن</a>
+
+          <div class="pricing-divider"></div>
+
+          <ul class="pricing-features">
+            <li data-i18n="pricing.pro.f1"><strong>نقطتان</strong> لكل دينار (ضعف الأساسية)</li>
+            <li data-i18n="pricing.pro.f2">خصم إضافي ١٠٪ في كل المتاجر</li>
+            <li data-i18n="pricing.pro.f3">شحن مجاني على كل طلباتك</li>
+            <li data-i18n="pricing.pro.f4">وصول مبكر للعروض الحصرية</li>
+            <li data-i18n="pricing.pro.f5">هدية شهرية مختارة</li>
+            <li data-i18n="pricing.pro.f6">دعم مخصّص عبر الدردشة</li>
+          </ul>
+        </article>
+
+        <!-- باقة VIP -->
+        <article class="pricing-card pricing-card--vip reveal">
+          <div class="pricing-card-head">
+            <h3 data-i18n="pricing.vip.name">VIP</h3>
+            <p data-i18n="pricing.vip.tag">تجربة لا تُضاهى</p>
+          </div>
+
+          <div class="pricing-price">
+            <span class="pricing-currency" data-i18n="pricing.currency">ر.س</span>
+            <span class="pricing-amount" data-price-monthly="15" data-price-yearly="12">15</span>
+            <span class="pricing-period" data-i18n="pricing.month">/شهرياً</span>
+          </div>
+          <div class="pricing-save" data-billing-only="yearly">
+            <span data-i18n="pricing.vip.yearly">تدفع ١٤٤ سنوياً — وفّر ٣٦ د.ب</span>
+          </div>
+
+          <a href="#" class="btn btn-ghost pricing-cta" data-plan="vip" data-i18n="pricing.vip.cta">اشترك في VIP</a>
+
+          <div class="pricing-divider"></div>
+
+          <ul class="pricing-features">
+            <li data-i18n="pricing.vip.f1"><strong>٤ نقاط</strong> لكل دينار</li>
+            <li data-i18n="pricing.vip.f2">خصم دائم ٢٠٪ في المتاجر الشريكة</li>
+            <li data-i18n="pricing.vip.f3">مستشار تسوّق شخصي</li>
+            <li data-i18n="pricing.vip.f4">دعوات لفعاليات VIP حصرية</li>
+            <li data-i18n="pricing.vip.f5">هدايا فصلية فاخرة</li>
+            <li data-i18n="pricing.vip.f6">شحن عالمي مجاني</li>
+            <li data-i18n="pricing.vip.f7">وصول إلى شبكة شركاء دولية</li>
+          </ul>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============ جدول المقارنة ============ -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="section-eyebrow" data-i18n="compare.eyebrow">مقارنة تفصيلية</div>
+        <h2 class="section-title" data-i18n="compare.title">الفرق بين الباقات</h2>
+      </div>
+
+      <div class="compare-table reveal">
+        <table>
+          <thead>
+            <tr>
+              <th data-i18n="compare.feature">الميزة</th>
+              <th data-i18n="pricing.free.name">الأساسية</th>
+              <th class="th-featured" data-i18n="pricing.pro.name">المميّزة</th>
+              <th data-i18n="pricing.vip.name">VIP</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-i18n="compare.rate">معدّل كسب النقاط</td>
+              <td>١×</td>
+              <td class="td-featured">٢×</td>
+              <td>٣×</td>
+            </tr>
+            <tr>
+              <td data-i18n="compare.discount">خصم إضافي</td>
+              <td>—</td>
+              <td class="td-featured">١٠٪</td>
+              <td>٢٠٪</td>
+            </tr>
+            <tr>
+              <td data-i18n="compare.shipping">شحن مجاني</td>
+              <td>—</td>
+              <td class="td-featured">✓</td>
+              <td><span data-i18n="compare.global">عالمي</span></td>
+            </tr>
+            <tr>
+              <td data-i18n="compare.earlyAccess">وصول مبكر للعروض</td>
+              <td>—</td>
+              <td class="td-featured">✓</td>
+              <td>✓</td>
+            </tr>
+            <tr>
+              <td data-i18n="compare.gifts">هدايا دورية</td>
+              <td>—</td>
+              <td class="td-featured" data-i18n="compare.monthly">شهرية</td>
+              <td data-i18n="compare.quarterly">فصلية فاخرة</td>
+            </tr>
+            <tr>
+              <td data-i18n="compare.advisor">مستشار شخصي</td>
+              <td>—</td>
+              <td class="td-featured">—</td>
+              <td>✓</td>
+            </tr>
+            <tr>
+              <td data-i18n="compare.events">فعاليات حصرية</td>
+              <td>—</td>
+              <td class="td-featured">—</td>
+              <td>✓</td>
+            </tr>
+            <tr>
+              <td data-i18n="compare.support">الدعم</td>
+              <td data-i18n="compare.email">بريد إلكتروني</td>
+              <td class="td-featured" data-i18n="compare.chat">دردشة</td>
+              <td data-i18n="compare.priority">أولوية ٢٤/٧</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============ أسئلة سريعة ============ -->
+  <section class="section section--soft">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="section-eyebrow" data-i18n="pricingFaq.eyebrow">أسئلة عن الباقات</div>
+        <h2 class="section-title" data-i18n="pricingFaq.title">معلومات قد تهمّك</h2>
+      </div>
+
+      <div class="faq-list reveal">
+        <details class="faq-item">
+          <summary>
+            <span data-i18n="pricingFaq.1.q">هل يمكنني إلغاء اشتراكي في أي وقت؟</span>
+            <span class="faq-icon">+</span>
+          </summary>
+          <p data-i18n="pricingFaq.1.a">نعم، بكل تأكيد. يمكنك الإلغاء من إعدادات حسابك دون أي رسوم. تظل ميزاتك سارية حتى نهاية فترة الفوترة الحالية.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>
+            <span data-i18n="pricingFaq.2.q">ماذا يحدث للنقاط التي جمعتها عند الإلغاء؟</span>
+            <span class="faq-icon">+</span>
+          </summary>
+          <p data-i18n="pricingFaq.2.a">نقاطك تبقى معك بالكامل. يمكنك استبدالها متى شئت حتى لو عدت إلى الباقة الأساسية المجانية.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>
+            <span data-i18n="pricingFaq.3.q">هل يمكنني الترقية أو التخفيض بين الباقات؟</span>
+            <span class="faq-icon">+</span>
+          </summary>
+          <p data-i18n="pricingFaq.3.a">نعم. الترقية تسري فوراً مع احتساب الفارق، والتخفيض يسري في دورة الفوترة التالية.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>
+            <span data-i18n="pricingFaq.4.q">هل هناك فترة تجريبية؟</span>
+            <span class="faq-icon">+</span>
+          </summary>
+          <p data-i18n="pricingFaq.4.a">نعم، نقدّم ١٤ يوماً تجريبية مجانية على الباقة المميّزة، وضمان استرداد ٣٠ يوماً على كل الباقات المدفوعة.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============ CTA ============ -->
+  <section class="section">
+    <div class="container">
+      <div class="cta-box reveal">
+        <h2 data-i18n="pricing.cta.title">جرّب بدون مخاطرة</h2>
+        <p data-i18n="pricing.cta.desc">ضمان استرداد ٣٠ يوماً على كل الباقات المدفوعة. تجربة مميّزة ١٤ يوماً مجاناً.</p>
+        <div class="cta-buttons">
+          <a href="signup.html" class="btn btn-primary" data-i18n="pricing.cta.primary">ابدأ التجربة المجانية</a>
+          <a href="index.html" class="btn btn-ghost" data-i18n="pricing.cta.secondary">العودة للرئيسية</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============ Footer ============ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div class="logo">
+            <span class="logo-mark">◆</span>
+            <span data-i18n="brand.name">نُقطة</span>
+          </div>
+          <p class="footer-tagline" data-i18n="footer.tagline">
+            منصة المكافآت الأولى. كل عملية شراء تستحقّ أن تُكافأ.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer.product">المنتج</h4>
+          <ul>
+            <li><a href="index.html#how" data-i18n="footer.howItWorks">كيف يعمل</a></li>
+            <li><a href="pricing.html" data-i18n="footer.pricing">الباقات</a></li>
+            <li><a href="index.html#rewards" data-i18n="footer.rewards">المكافآت</a></li>
+            <li><a href="#" data-i18n="footer.app">التطبيق</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer.company">الشركة</h4>
+          <ul>
+            <li><a href="#" data-i18n="footer.about">من نحن</a></li>
+            <li><a href="#" data-i18n="footer.blog">المدوّنة</a></li>
+            <li><a href="#" data-i18n="footer.careers">الوظائف</a></li>
+            <li><a href="#" data-i18n="footer.contact">تواصل معنا</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer.support">الدعم</h4>
+          <ul>
+            <li><a href="index.html#faq" data-i18n="footer.faq">الأسئلة الشائعة</a></li>
+            <li><a href="#" data-i18n="footer.help">مركز المساعدة</a></li>
+            <li><a href="#" data-i18n="footer.terms">الشروط والأحكام</a></li>
+            <li><a href="#" data-i18n="footer.privacy">الخصوصية</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div data-i18n="footer.copyright">© ٢٠٢٦ نُقطة. جميع الحقوق محفوظة.</div>
+        <div data-i18n="footer.made">صُنع بحرفية في البحرين ◆</div>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- السكربتات -->
+  <script src="js/translations.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/user.js"></script>
+  <script src="js/auth-ui.js"></script>
+  <script src="js/toast.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/pricing.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Tips and tricks to earn more Nuqta points.">
+
+  <title data-i18n="learn.meta">Earn more points — Nuqta</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400;500;600;700&family=Rubik:wght@300;400;500;600;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/main.css">
+
+  <script>
+    (function(){ try { var t=localStorage.getItem('nuqta_theme')||'dark'; document.documentElement.setAttribute('data-theme',t); } catch(e){} })();
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/supabase-client.js"></script>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container nav-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-mark">◆</span>
+        <span data-i18n="brand.name">Nuqta</span>
+      </a>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="dashboard.html" data-i18n="nav.dashboard">Dashboard</a></li>
+        <li><a href="rewards.html" data-i18n="nav.rewards">Rewards</a></li>
+        <li><a href="learn.html" class="active" data-i18n="nav.learn">Earn more</a></li>
+        <li><a href="pricing.html" data-i18n="nav.pricing">Pricing</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="lang-switch" id="langSwitch" aria-label="Language">
+          <span class="lang-switch__current">ع</span>
+        </button>
+        <button class="theme-toggle" id="themeToggle" aria-label="Theme"></button>
+
+        <div class="nav-auth" data-auth="anon">
+          <a href="login.html" class="btn btn-ghost btn-nav" data-i18n="cta.signin">Sign in</a>
+          <a href="signup.html" class="btn btn-primary btn-nav" data-i18n="cta.join">Join now</a>
+        </div>
+        <div class="nav-auth" data-auth="authed" style="display:none">
+          <a href="dashboard.html" class="btn btn-ghost btn-nav" data-i18n="nav.my.dashboard">Dashboard</a>
+          <a href="#" class="btn btn-primary btn-nav" data-action="signout" data-i18n="dashboard.logout">Sign out</a>
+        </div>
+
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- Hero -->
+  <section class="learn-hero">
+    <div class="container">
+      <div class="learn-head reveal">
+        <span class="eyebrow" data-i18n="learn.eyebrow">Maximize your points</span>
+        <h1 class="learn-title">
+          <span data-i18n="learn.title.1">Earn more.</span>
+          <span class="italic" data-i18n="learn.title.2">Redeem faster.</span>
+        </h1>
+        <p class="learn-sub" data-i18n="learn.sub">
+          Here are proven ways to grow your points balance and climb through tiers faster.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- النصائح -->
+  <section class="section">
+    <div class="container">
+
+      <div class="tips-grid">
+
+        <div class="tip-card reveal">
+          <div class="tip-num">01</div>
+          <div class="tip-icon">🎯</div>
+          <h3 class="tip-title" data-i18n="learn.tip1.title">Upgrade your tier</h3>
+          <p class="tip-desc" data-i18n="learn.tip1.desc">
+            Silver tier members earn 1.5× points per dinar. Gold earn 2×, and Platinum 3×. Each tier unlocks more value per purchase.
+          </p>
+          <div class="tip-highlight">
+            <strong data-i18n="learn.tip1.highlight">Up to 3× multiplier</strong>
+          </div>
+        </div>
+
+        <div class="tip-card reveal">
+          <div class="tip-num">02</div>
+          <div class="tip-icon">👥</div>
+          <h3 class="tip-title" data-i18n="learn.tip2.title">Invite your friends</h3>
+          <p class="tip-desc" data-i18n="learn.tip2.desc">
+            Share your referral code with friends. When they sign up, you both receive 200 welcome points as a thank you.
+          </p>
+          <div class="tip-highlight">
+            <strong data-i18n="learn.tip2.highlight">+200 points per friend</strong>
+          </div>
+        </div>
+
+        <div class="tip-card reveal">
+          <div class="tip-num">03</div>
+          <div class="tip-icon">🏪</div>
+          <h3 class="tip-title" data-i18n="learn.tip3.title">Shop at partner stores</h3>
+          <p class="tip-desc" data-i18n="learn.tip3.desc">
+            Every dinar spent at 320+ partner stores earns you points. Look for the Nuqta logo at checkout.
+          </p>
+          <div class="tip-highlight">
+            <strong data-i18n="learn.tip3.highlight">320+ partner stores</strong>
+          </div>
+        </div>
+
+        <div class="tip-card reveal">
+          <div class="tip-num">04</div>
+          <div class="tip-icon">🎂</div>
+          <h3 class="tip-title" data-i18n="learn.tip4.title">Birthday bonus</h3>
+          <p class="tip-desc" data-i18n="learn.tip4.desc">
+            Add your birthday in your profile to receive a special gift of 500 points every year on your big day.
+          </p>
+          <div class="tip-highlight">
+            <strong data-i18n="learn.tip4.highlight">+500 birthday points</strong>
+          </div>
+        </div>
+
+        <div class="tip-card reveal">
+          <div class="tip-num">05</div>
+          <div class="tip-icon">🏆</div>
+          <h3 class="tip-title" data-i18n="learn.tip5.title">Complete achievements</h3>
+          <p class="tip-desc" data-i18n="learn.tip5.desc">
+            Unlock special badges by reaching milestones — first redemption, tier upgrades, and more. Some badges unlock bonus points.
+          </p>
+          <div class="tip-highlight">
+            <strong data-i18n="learn.tip5.highlight">8 unique badges</strong>
+          </div>
+        </div>
+
+        <div class="tip-card reveal">
+          <div class="tip-num">06</div>
+          <div class="tip-icon">⭐</div>
+          <h3 class="tip-title" data-i18n="learn.tip6.title">Upgrade your plan</h3>
+          <p class="tip-desc" data-i18n="learn.tip6.desc">
+            Premium plans include point multipliers, exclusive rewards, and priority access to new partner stores.
+          </p>
+          <div class="tip-highlight">
+            <strong data-i18n="learn.tip6.highlight">Up to 2× plan bonus</strong>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- CTA أسفل الصفحة -->
+  <section class="section section--soft">
+    <div class="container">
+      <div class="learn-cta reveal">
+        <h2 class="section-title" data-i18n="learn.cta.title">Ready to earn more?</h2>
+        <p data-i18n="learn.cta.sub">
+          Start applying these tips today and watch your balance grow.
+        </p>
+        <div class="cta-buttons" style="justify-content:center;margin-top:24px">
+          <a href="rewards.html" class="btn btn-primary" data-auth="authed" style="display:none" data-i18n="learn.cta.redeem">
+            Browse rewards
+          </a>
+          <a href="signup.html" class="btn btn-primary" data-auth="anon" data-i18n="cta.join">
+            Join now
+          </a>
+          <a href="pricing.html" class="btn btn-ghost" data-i18n="learn.cta.plans">
+            Explore plans
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Footer مبسّط -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom" style="border:none;padding:24px 0">
+        <div data-i18n="footer.copyright">© 2026 Nuqta. All rights reserved.</div>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- السكربتات -->
+  <script src="js/translations.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/user.js"></script>
+  <script src="js/auth-ui.js"></script>
+  <script src="js/toast.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

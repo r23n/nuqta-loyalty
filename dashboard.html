@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="لوحة تحكم عضو نُقطة — تابع نقاطك، ارتقِ بين المستويات، واستبدل مكافآتك.">
+
+  <title data-i18n="dashboard.meta">لوحة التحكم — نُقطة</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400;500;600;700&family=Rubik:wght@300;400;500;600;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/main.css">
+
+  <script>
+    (function(){ try { var t=localStorage.getItem('nuqta_theme')||'dark'; document.documentElement.setAttribute('data-theme',t); } catch(e){} })();
+  </script>
+  <!-- Supabase SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+  <script src="js/supabase-client.js"></script>
+</head>
+<body>
+
+  <!-- مؤشر القراءة -->
+  <div class="reading-progress"><div class="reading-progress-fill"></div></div>
+
+
+  <!-- ============ Navbar ============ -->
+  <nav class="navbar">
+    <div class="container nav-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-mark">◆</span>
+        <span data-i18n="brand.name">نُقطة</span>
+      </a>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="dashboard.html" class="active" data-i18n="nav.dashboard">لوحتي</a></li>
+        <li><a href="rewards.html" data-i18n="nav.rewards">Rewards</a></li>
+        <li><a href="profile.html" data-i18n="nav.profile">My profile</a></li>
+        <li><a href="transactions.html" data-i18n="nav.transactions">History</a></li>
+        <li><a href="learn.html" data-i18n="nav.learn">Earn more</a></li>
+        <li><a href="pricing.html" data-i18n="nav.pricing">الباقات</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="lang-switch" id="langSwitch" aria-label="Language">
+          <span class="lang-switch__current">ع</span>
+        </button>
+        <button class="theme-toggle" id="themeToggle" aria-label="Theme"></button>
+                <!-- حالة الزائر (غير مسجّل) -->
+        <div class="nav-auth" data-auth="anon">
+          <a href="login.html" class="btn btn-ghost btn-nav" data-i18n="cta.signin">Sign in</a>
+          <a href="signup.html" class="btn btn-primary btn-nav" data-i18n="cta.join">Join now</a>
+        </div>
+
+        <!-- حالة المسجّل -->
+        <div class="nav-auth" data-auth="authed" style="display:none">
+          <a href="dashboard.html" class="btn btn-ghost btn-nav" data-i18n="nav.my.dashboard">My dashboard</a>
+          <a href="#" class="btn btn-primary btn-nav" data-action="signout" data-i18n="dashboard.logout">Sign out</a>
+        </div>
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- ============ الترحيب + البطاقات الرئيسية ============ -->
+  <section class="dashboard-hero">
+    <div class="container">
+
+      <div class="dashboard-welcome reveal">
+        <h1 class="dashboard-welcome-title">
+          <span data-i18n="dashboard.welcome">مرحباً،</span>
+          <span class="italic" id="welcomeName" data-no-translate dir="ltr"><span class="skeleton skeleton-text" style="display:inline-block;width:140px;height:30px;vertical-align:middle"></span></span> 👋
+        </h1>
+        <div class="dashboard-welcome-row">
+          <p class="dashboard-welcome-sub" id="memberSince"><span class="skeleton skeleton-text" style="display:inline-block;width:180px;height:14px"></span></p>
+          <span class="plan-badge" id="planBadge" style="display:none">—</span>
+        </div>
+      </div>
+
+      <!-- إشعارات ذكية (يملأها notifications.js) -->
+      <div class="notifications" id="notifications"></div>
+
+
+      <!-- شبكة البطاقات: الرصيد + التقدم للمستوى التالي -->
+      <div class="dashboard-main-grid">
+
+        <!-- بطاقة الرصيد -->
+        <div class="balance-card reveal">
+          <div class="balance-card-bg">
+            <div class="card-chip"></div>
+            <div>
+              <div class="card-label" data-i18n="dashboard.balance.label">رصيدك الحالي</div>
+              <div class="balance-amount">
+                <span class="balance-number" id="balanceNumber">٠</span>
+              </div>
+              <div class="balance-unit" data-i18n="dashboard.balance.unit">نقطة</div>
+            </div>
+
+            <div class="balance-card-footer">
+              <div class="card-tier-big" id="tierLabel" data-i18n="tier.bronze">برونزي</div>
+              <a href="rewards.html" class="btn btn-primary btn-sm" data-i18n="dashboard.balance.redeem">
+                استبدل الآن
+              </a>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- بطاقة التقدم للمستوى التالي -->
+        <div class="progress-card reveal">
+          <div class="progress-card-head">
+            <h2 class="progress-card-title" data-i18n="dashboard.progress.title">
+              التقدم للمستوى التالي
+            </h2>
+          </div>
+
+          <div class="progress-tiers">
+            <div class="progress-tier-mark is-current">
+              <span id="progressCurrentTier" data-i18n="tier.bronze">برونزي</span>
+            </div>
+            <div class="progress-tier-mark">
+              <span id="progressNextTier" data-i18n="tier.silver">فضي</span>
+            </div>
+          </div>
+
+          <div class="dashboard-progress-bar">
+            <div class="dashboard-progress-fill" id="dashProgressFill" data-progress="50"></div>
+          </div>
+
+          <div class="progress-card-footer">
+            <div class="progress-remaining-label">
+              <span id="remainingPoints">—</span>
+              <span id="remainingLabel" data-i18n="dashboard.progress.remaining.to.silver">
+                متبقي للمستوى الفضي
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+      <!-- إحصائيات سريعة -->
+      <div class="stats-mini-grid">
+        <div class="stat-mini reveal">
+          <div class="stat-mini-num" id="statEarned">0</div>
+          <div class="stat-mini-label" data-i18n="dashboard.stats.earned">نقاط هذا الشهر</div>
+        </div>
+        <div class="stat-mini reveal">
+          <div class="stat-mini-num" id="statRedeemed">0</div>
+          <div class="stat-mini-label" data-i18n="dashboard.stats.redeemed">مكافآت مستبدلة</div>
+        </div>
+        <div class="stat-mini reveal">
+          <div class="stat-mini-num" id="statSaved">0</div>
+          <div class="stat-mini-label" data-i18n="dashboard.stats.saved">ديناراً وفّرته</div>
+        </div>
+        <div class="stat-mini reveal">
+          <div class="stat-mini-num" id="statDays">0</div>
+          <div class="stat-mini-label" data-i18n="dashboard.stats.days">يوماً معنا</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============ المعاملات ============ -->
+  <section class="section section--soft">
+    <div class="container">
+      <!-- قسم التحدّيات النشطة (يملأه challenges.js) -->
+      <div id="challengesSection" class="dash-sub-section">
+        <!-- Skeleton placeholder يُستبدل بالمحتوى الفعلي -->
+        <div class="panel-head">
+          <h2 class="panel-title">
+            <span class="skeleton skeleton-text" style="display:inline-block;width:180px;height:28px"></span>
+          </h2>
+        </div>
+        <div class="challenges-grid">
+          <div class="challenge-card">
+            <div class="skeleton" style="height:80px;border-radius:var(--radius-sm)"></div>
+          </div>
+          <div class="challenge-card">
+            <div class="skeleton" style="height:80px;border-radius:var(--radius-sm)"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- قسم التحليلات الشخصية (يملأه analytics.js) -->
+      <div id="analyticsSection" class="dash-sub-section dash-sub-section--hidden"></div>
+
+      <div class="panel-head reveal">
+        <h2 class="panel-title" data-i18n="dashboard.recent.title">المعاملات الأخيرة</h2>
+      </div>
+
+      <!-- dashboard.js يملأ هذا (أو يعرض empty-state لو ما في معاملات) -->
+      <div class="transactions reveal" id="transactionsList"></div>
+    </div>
+  </section>
+
+
+  <!-- ============ مكافآت موصى بها (ثابتة لجميع المستخدمين) ============ -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head section-head--small reveal" style="text-align:start;max-width:none">
+        <h2 class="section-title" data-i18n="dashboard.suggest.title" style="font-size:clamp(28px,3.5vw,40px)">
+          مكافآت موصى بها لك
+        </h2>
+        <p class="section-desc" data-i18n="dashboard.suggest.sub">
+          اختيارات مخصّصة لك
+        </p>
+      </div>
+
+      <div class="rewards-grid">
+
+        <article class="reward-card reveal">
+          <div class="reward-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M20 12V8H6a2 2 0 010-4h12v4"/><path d="M20 12v4H6a2 2 0 100 4h14v-4"/>
+            </svg>
+          </div>
+          <div class="reward-cost">
+            <strong>1,000</strong>
+            <span data-i18n="points.label">نقطة</span>
+          </div>
+          <h3 data-i18n="rewards.1.title">خصومات فورية</h3>
+          <p>كوبون ٥ د.ب في Lilou</p>
+          <button class="btn btn-ghost btn-full btn-sm" style="margin-top:16px" data-i18n="dashboard.suggest.redeem">
+            استبدل
+          </button>
+        </article>
+
+        <article class="reward-card reward-card--featured reveal">
+          <div class="reward-badge" data-i18n="rewards.hot">الأكثر طلباً</div>
+          <div class="reward-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M18 8h1a4 4 0 010 8h-1"/>
+              <path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/>
+              <line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>
+            </svg>
+          </div>
+          <div class="reward-cost">
+            <strong>2,500</strong>
+            <span data-i18n="points.label">نقطة</span>
+          </div>
+          <h3 data-i18n="rewards.3.title">تجارب مطاعم</h3>
+          <p>عشاء لشخصين في Villa Mamas</p>
+          <button class="btn btn-primary btn-full btn-sm" style="margin-top:16px" data-i18n="dashboard.suggest.redeem">
+            استبدل
+          </button>
+        </article>
+
+        <article class="reward-card reveal">
+          <div class="reward-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="3" y="8" width="18" height="13" rx="2"/>
+              <path d="M12 8v13M3 12h18M7 8V5a2 2 0 012-2h0a2 2 0 012 2v3M17 8V5a2 2 0 00-2-2h0a2 2 0 00-2 2v3"/>
+            </svg>
+          </div>
+          <div class="reward-cost">
+            <strong>1,200</strong>
+            <span data-i18n="points.label">نقطة</span>
+          </div>
+          <h3 data-i18n="rewards.2.title">هدايا فاخرة</h3>
+          <p>هدية من متجر Saffron</p>
+          <button class="btn btn-ghost btn-full btn-sm" style="margin-top:16px" data-i18n="dashboard.suggest.redeem">
+            استبدل
+          </button>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============ Footer مبسّط ============ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom" style="border:none;padding:0">
+        <div data-i18n="footer.copyright">© ٢٠٢٦ نُقطة. جميع الحقوق محفوظة.</div>
+        <div>
+          <a href="index.html" data-i18n="cta.btn.secondary" style="color:var(--gold)">العودة للرئيسية</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- السكربتات -->
+  <script src="js/translations.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/user.js"></script>
+  <script src="js/auth-ui.js"></script>
+  <script src="js/toast.js"></script>
+  <script src="js/confetti.js"></script>
+  <script src="js/achievements.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/notifications.js"></script>
+  <script src="js/analytics.js"></script>
+  <script src="js/challenges.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

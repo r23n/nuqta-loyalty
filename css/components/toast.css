@@ -1,0 +1,131 @@
+/* ============================================================
+   toast.css
+   ------------------------------------------------------------
+   إشعارات صغيرة أنيقة في زاوية الشاشة.
+   ============================================================ */
+
+.toast-container {
+  position: fixed;
+  top: 100px;
+  inset-inline-end: 24px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  pointer-events: none;
+  max-width: min(420px, calc(100vw - 48px));
+}
+
+.toast {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  color: var(--cream);
+  font-size: 14px;
+  line-height: 1.5;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+  min-width: 280px;
+  opacity: 0;
+  transform: translateX(20px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+[dir="rtl"] .toast {
+  transform: translateX(-20px);
+}
+
+.toast.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.toast.is-leaving {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+/* الأيقونة */
+.toast-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+}
+
+.toast-msg {
+  flex: 1;
+  word-break: break-word;
+}
+
+/* زر الإغلاق */
+.toast-close {
+  background: transparent;
+  border: none;
+  color: var(--cream-faint);
+  font-size: 24px;
+  line-height: 1;
+  padding: 0 4px;
+  cursor: pointer;
+  transition: color 0.2s;
+  flex-shrink: 0;
+}
+
+.toast-close:hover {
+  color: var(--cream);
+}
+
+/* ---------- أنواع ---------- */
+.toast--success {
+  border-color: rgba(86, 194, 126, 0.35);
+}
+.toast--success .toast-icon {
+  background: rgba(86, 194, 126, 0.15);
+  color: #56c27e;
+}
+
+.toast--error {
+  border-color: rgba(224, 112, 112, 0.35);
+}
+.toast--error .toast-icon {
+  background: rgba(224, 112, 112, 0.15);
+  color: #e07070;
+}
+
+.toast--info {
+  border-color: rgba(201, 169, 97, 0.35);
+}
+.toast--info .toast-icon {
+  background: rgba(201, 169, 97, 0.15);
+  color: var(--gold);
+}
+
+.toast--warning {
+  border-color: rgba(232, 181, 76, 0.4);
+}
+.toast--warning .toast-icon {
+  background: rgba(232, 181, 76, 0.15);
+  color: #e8b54c;
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 600px) {
+  .toast-container {
+    top: 80px;
+    inset-inline-end: 12px;
+    inset-inline-start: 12px;
+    max-width: none;
+  }
+
+  .toast {
+    min-width: 0;
+    width: 100%;
+  }
+}

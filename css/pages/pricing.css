@@ -1,0 +1,349 @@
+/* ============================================================
+   pages/pricing.css
+   ------------------------------------------------------------
+   أنماط خاصة بصفحة الأسعار (pricing.html):
+   - مبدّل الفوترة (Billing toggle)
+   - بطاقات الباقات (Pricing cards)
+   - جدول المقارنة (Compare table)
+
+   ============================================================ */
+
+
+/* ============================================================
+   مبدّل الفوترة (شهري/سنوي)
+   ============================================================ */
+.billing-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  padding: 6px;
+  position: relative;
+}
+
+.billing-btn {
+  padding: 10px 24px;
+  background: transparent;
+  border: none;
+  color: var(--cream-dim);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.billing-btn:hover {
+  color: var(--cream);
+}
+
+.billing-btn.active {
+  background: linear-gradient(135deg, var(--gold), var(--gold-bright));
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.billing-badge {
+  position: absolute;
+  top: -12px;
+  inset-inline-end: -40px;
+  padding: 4px 12px;
+  background: var(--wine);
+  color: var(--cream);
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+
+/* ============================================================
+   قسم الأسعار الرئيسي
+   ============================================================ */
+.pricing-section {
+  padding: 60px 0 var(--space-xl);
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+
+/* ============================================================
+   بطاقة الباقة (Pricing Card)
+   ============================================================ */
+.pricing-card {
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  padding: 40px 32px;
+  position: relative;
+  transition: all var(--transition-slow);
+}
+
+.pricing-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(201, 169, 97, 0.3);
+}
+
+/* الباقة المميّزة (في الوسط) */
+.pricing-card--featured {
+  background: linear-gradient(180deg, rgba(201, 169, 97, 0.1) 0%, var(--bg-soft) 100%);
+  border-color: var(--gold);
+  box-shadow: var(--shadow-glow);
+  transform: scale(1.05);
+  z-index: 2;
+}
+
+.pricing-card--featured:hover {
+  transform: scale(1.05) translateY(-8px);
+}
+
+/* باقة VIP (داكنة وفاخرة) */
+.pricing-card--vip {
+  background: linear-gradient(180deg, rgba(107, 31, 46, 0.25) 0%, var(--bg-soft) 100%);
+  border-color: rgba(107, 31, 46, 0.5);
+}
+
+/* شارة "الأكثر شعبية" */
+.pricing-badge {
+  position: absolute;
+  top: -14px;
+  inset-inline-end: 24px;
+  padding: 6px 14px;
+  background: var(--gold);
+  color: var(--ink);
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* رأس البطاقة */
+.pricing-card-head {
+  margin-bottom: 24px;
+}
+
+.pricing-card-head h3 {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--cream);
+  margin-bottom: 6px;
+}
+
+.pricing-card-head p {
+  color: var(--cream-dim);
+  font-size: 14px;
+}
+
+/* السعر */
+.pricing-price {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 12px;
+  font-family: var(--font-display);
+}
+
+.pricing-currency {
+  font-size: 16px;
+  color: var(--cream-dim);
+}
+
+.pricing-amount {
+  font-size: 64px;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.pricing-period {
+  font-size: 14px;
+  color: var(--cream-dim);
+  font-family: var(--font-body);
+}
+
+.pricing-save {
+  color: var(--gold);
+  font-size: 13px;
+  margin-bottom: 24px;
+  font-weight: 500;
+}
+
+/* زر الاشتراك */
+.pricing-cta {
+  width: 100%;
+  margin-bottom: 32px;
+}
+
+/* فاصل */
+.pricing-divider {
+  height: 1px;
+  background: var(--line);
+  margin-bottom: 24px;
+}
+
+/* قائمة الميزات */
+.pricing-features {
+  list-style: none;
+  padding: 0;
+}
+
+.pricing-features li {
+  padding: 10px 0;
+  padding-inline-start: 28px;
+  position: relative;
+  color: var(--cream-dim);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.pricing-features li::before {
+  content: '✓';
+  position: absolute;
+  inset-inline-start: 0;
+  top: 10px;
+  color: var(--gold);
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.pricing-features li strong {
+  color: var(--cream);
+  font-weight: 600;
+}
+
+
+/* ============================================================
+   جدول المقارنة (Compare Table)
+   ============================================================ */
+.compare-table {
+  max-width: 1000px;
+  margin: 0 auto;
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.compare-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.compare-table th,
+.compare-table td {
+  padding: 16px 24px;
+  text-align: start;
+  border-bottom: 1px solid var(--line);
+  font-size: 15px;
+}
+
+.compare-table th {
+  background: var(--bg-elevated);
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--cream);
+  font-size: 14px;
+  letter-spacing: 0.5px;
+}
+
+.compare-table th.th-featured,
+.compare-table td.td-featured {
+  background: rgba(201, 169, 97, 0.08);
+  color: var(--gold);
+  font-weight: 600;
+  position: relative;
+}
+
+.compare-table th.th-featured {
+  color: var(--gold);
+}
+
+.compare-table tbody tr:hover {
+  background: rgba(244, 234, 213, 0.03);
+}
+
+.compare-table tbody tr:last-child th,
+.compare-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.compare-table td {
+  color: var(--cream-dim);
+}
+
+.compare-table td:first-child {
+  font-weight: 500;
+  color: var(--cream);
+}
+
+
+/* ============================================================
+   Onboarding Banner (يظهر عند القدوم من signup)
+   ============================================================ */
+.onboarding-banner {
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-bright) 100%);
+  color: var(--ink);
+  padding: 16px 0;
+  margin-top: 80px; /* حتى لا يختفي خلف navbar */
+  position: relative;
+  z-index: 10;
+}
+
+.onboarding-banner-inner {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-content: center;
+  text-align: start;
+}
+
+.onboarding-icon {
+  font-size: 32px;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.onboarding-title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.3;
+}
+
+.onboarding-sub {
+  font-size: 13px;
+  color: rgba(44, 24, 16, 0.75);
+}
+
+
+/* ============================================================
+   زر الباقة الحالية
+   ============================================================ */
+.pricing-cta.is-current {
+  background: rgba(201, 169, 97, 0.15);
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  cursor: default;
+}
+
+@media (max-width: 600px) {
+  .onboarding-banner-inner {
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+  }
+
+  .onboarding-title {
+    font-size: 16px;
+  }
+}

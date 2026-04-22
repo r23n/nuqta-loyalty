@@ -1,0 +1,473 @@
+/* ============================================================
+   pages/signup.css
+   ------------------------------------------------------------
+   أنماط صفحة التسجيل متعددة الخطوات.
+   ============================================================ */
+
+
+/* ============================================================
+   القسم الرئيسي
+   ============================================================ */
+.signup-section {
+  min-height: 100vh;
+  padding: 120px 0 60px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.signup-wrap {
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+
+/* ============================================================
+   شريط التقدم في أعلى النموذج
+   ============================================================ */
+.signup-progress {
+  margin-bottom: 32px;
+}
+
+.signup-progress-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 13px;
+  color: var(--cream-dim);
+  letter-spacing: 0.5px;
+}
+
+.signup-progress-bar {
+  height: 6px;
+  background: var(--bg-elevated);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  border: 1px solid var(--line);
+}
+
+.signup-progress-fill {
+  height: 100%;
+  width: 33%;
+  background: linear-gradient(90deg, var(--copper), var(--gold), var(--gold-bright));
+  border-radius: var(--radius-pill);
+  transition: width 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+
+/* ============================================================
+   البطاقة الرئيسية
+   ============================================================ */
+.signup-card {
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  padding: 48px;
+  position: relative;
+  overflow: hidden;
+}
+
+.signup-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  background: radial-gradient(ellipse at 50% 0%, rgba(201, 169, 97, 0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+
+/* ============================================================
+   الخطوات (تظهر واحدة تلو الأخرى)
+   ============================================================ */
+.signup-step {
+  display: none;
+  animation: slideIn 0.4s ease;
+}
+
+.signup-step.is-active {
+  display: block;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.signup-title {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.5vw, 38px);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 12px;
+  letter-spacing: -0.02em;
+  position: relative;
+}
+
+.signup-sub {
+  color: var(--cream-dim);
+  font-size: 16px;
+  line-height: 1.7;
+  margin-bottom: 32px;
+  position: relative;
+}
+
+
+/* ============================================================
+   الحقول
+   ============================================================ */
+.form-group {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--cream-dim);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.form-input {
+  width: 100%;
+  padding: 14px 18px;
+  background: var(--bg);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  color: var(--cream);
+  font-family: var(--font-body);
+  font-size: 16px;
+  transition: all var(--transition-fast);
+  outline: none;
+}
+
+.form-input::placeholder {
+  color: var(--cream-faint);
+  opacity: 0.7;
+}
+
+.form-input:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201, 169, 97, 0.15);
+}
+
+.form-input.has-error {
+  border-color: #c94444;
+}
+
+.form-error {
+  color: #e07070;
+  font-size: 13px;
+  margin-top: 6px;
+  min-height: 18px;
+}
+
+.form-error--center {
+  text-align: center;
+  margin: 12px 0 20px;
+}
+
+
+/* ============================================================
+   أزرار الاهتمامات (الخطوة ٢)
+   ============================================================ */
+.interest-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.interest-tag {
+  padding: 12px 20px;
+  background: transparent;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-pill);
+  color: var(--cream-dim);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.interest-tag:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.interest-tag.is-selected {
+  background: linear-gradient(135deg, var(--gold), var(--gold-bright));
+  border-color: transparent;
+  color: var(--ink);
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(201, 169, 97, 0.3);
+}
+
+
+/* ============================================================
+   ملخص الخطوة ٣
+   ============================================================ */
+.summary-list {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 8px 24px;
+  margin-bottom: 24px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+  gap: 16px;
+}
+
+.summary-row:last-child {
+  border-bottom: none;
+}
+
+.summary-row--wrap {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.summary-label {
+  color: var(--cream-faint);
+  font-size: 13px;
+  letter-spacing: 0.3px;
+}
+
+.summary-value {
+  color: var(--cream);
+  font-weight: 500;
+  text-align: end;
+  font-size: 15px;
+}
+
+
+/* ============================================================
+   صف الشروط
+   ============================================================ */
+.checkbox-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 24px;
+  cursor: pointer;
+  color: var(--cream-dim);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.checkbox-row input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  cursor: pointer;
+  accent-color: var(--gold);
+  margin-top: 2px;
+}
+
+.checkbox-row.has-error span {
+  color: #e07070;
+}
+
+
+/* ============================================================
+   أزرار الإجراءات (رجوع + تالي)
+   ============================================================ */
+.signup-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.signup-actions .btn {
+  flex: 1;
+}
+
+
+/* ============================================================
+   شاشة النجاح
+   ============================================================ */
+.signup-success {
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  padding: 60px 48px;
+  text-align: center;
+  display: none;
+  animation: fadeIn 0.5s ease;
+}
+
+.signup-success.is-visible {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.success-circle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold), var(--gold-bright));
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+  animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes popIn {
+  0%   { transform: scale(0); }
+  100% { transform: scale(1); }
+}
+
+.success-points {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: 16px 0 32px;
+  padding: 14px 28px;
+  background: rgba(201, 169, 97, 0.1);
+  border: 1px solid rgba(201, 169, 97, 0.3);
+  border-radius: var(--radius-pill);
+}
+
+.success-points-num {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--gold);
+}
+
+.success-points span:last-child {
+  color: var(--cream-dim);
+  font-size: 14px;
+}
+
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+@media (max-width: 600px) {
+  .signup-section {
+    padding-top: 100px;
+  }
+
+  .signup-card {
+    padding: 32px 24px;
+  }
+
+  .signup-success {
+    padding: 48px 24px;
+  }
+
+  .interest-tag {
+    font-size: 13px;
+    padding: 10px 16px;
+  }
+}
+
+
+/* ============================================================
+   رابط بديل (عندك حساب؟ سجّل دخول)
+   ============================================================ */
+.signup-alt {
+  text-align: center;
+  margin-top: 24px;
+  color: var(--cream-dim);
+  font-size: 14px;
+}
+
+.signup-alt a {
+  color: var(--gold);
+  text-decoration: none;
+  font-weight: 600;
+  margin-inline-start: 6px;
+}
+
+.signup-alt a:hover {
+  text-decoration: underline;
+}
+
+
+/* ============================================================
+   رابط "نسيت كلمة السر"
+   ============================================================ */
+.login-forgot {
+  display: block;
+  text-align: end;
+  font-size: 13px;
+  color: var(--gold);
+  text-decoration: none;
+  margin: -8px 0 16px;
+  transition: color 0.2s;
+}
+
+.login-forgot:hover {
+  color: var(--gold-bright);
+  text-decoration: underline;
+}
+
+
+/* ============================================================
+   بنر الدعوة
+   ============================================================ */
+.invite-banner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 22px;
+  background: linear-gradient(135deg, rgba(201, 169, 97, 0.12), rgba(107, 31, 46, 0.08));
+  border: 1px solid rgba(201, 169, 97, 0.3);
+  border-radius: var(--radius-lg);
+  margin-bottom: 20px;
+}
+
+.invite-banner-icon {
+  font-size: 32px;
+  line-height: 1;
+}
+
+.invite-banner-content {
+  flex: 1;
+}
+
+.invite-banner-content strong {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--gold);
+  font-size: 15px;
+  margin-bottom: 2px;
+}
+
+.invite-banner-content p {
+  color: var(--cream-dim);
+  font-size: 13px;
+  margin: 0;
+}
+
+@media (max-width: 500px) {
+  .invite-banner {
+    padding: 14px 16px;
+  }
+  .invite-banner-icon {
+    font-size: 28px;
+  }
+}

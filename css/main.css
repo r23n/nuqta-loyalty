@@ -1,0 +1,34 @@
+/* ============================================================
+   main.css
+   ------------------------------------------------------------
+   الملف التجميعي — يستدعي جميع ملفات CSS بالترتيب الصحيح.
+   ============================================================ */
+
+/* 1. الأساسيات */
+@import url('variables.css');
+@import url('base.css');
+
+/* 2. المكونات المشتركة */
+@import url('components.css');
+@import url('components/toast.css');
+@import url('components/confetti.css');
+
+/* 3. الأقسام العامة */
+@import url('sections.css');
+
+/* 4. ميزات محددة (حاسبة، FAQ، مكافآت، إلخ) */
+@import url('features.css');
+
+/* 5. صفحات فرعية */
+@import url('pages/pricing.css');
+@import url('pages/signup.css');
+@import url('pages/dashboard.css');
+@import url('pages/profile.css');
+@import url('pages/rewards.css');
+@import url('pages/learn.css');
+@import url('pages/transactions.css');
+@import url('pages/checkout.css');
+
+/* 6. الحركة والاستجابة */
+@import url('animations.css');
+@import url('responsive.css');

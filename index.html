@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="نُقطة — اربح نقاط من كل عملية شراء، واستبدلها بمكافآت استثنائية من متاجرك المفضّلة.">
+
+  <title data-i18n="meta.title">نُقطة — اربح واستمتع مع كل عملية شراء</title>
+
+  <!-- الخطوط -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400;500;600;700&family=Rubik:wght@300;400;500;600;700;900&family=Amiri:wght@400;700&family=Fraunces:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/main.css">
+
+  <!-- تطبيق الوضع مبكراً لتجنّب الوميض (FOUC) -->
+  <script>
+    (function(){ try { var t=localStorage.getItem('nuqta_theme')||'dark'; document.documentElement.setAttribute('data-theme',t); } catch(e){} })();
+  </script>
+  <!-- Supabase SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+  <script src="js/supabase-client.js"></script>
+</head>
+
+<body>
+
+  <!-- مؤشر القراءة العلوي -->
+  <div class="reading-progress">
+    <div class="reading-progress-fill"></div>
+  </div>
+
+  <!-- ============================================================
+       شريط التنقل العلوي (مع مبدّل اللغة وقائمة الهامبرغر)
+       ============================================================ -->
+  <nav class="navbar">
+    <div class="container nav-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-mark">◆</span>
+        <span data-i18n="brand.name">نُقطة</span>
+      </a>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#how" data-i18n="nav.how">كيف يعمل</a></li>
+        <li><a href="#rewards" data-i18n="nav.rewards">المكافآت</a></li>
+        <li><a href="#tiers" data-i18n="nav.tiers">المستويات</a></li>
+        <li><a href="pricing.html" data-i18n="nav.pricing">الباقات</a></li>
+        <li><a href="#faq" data-i18n="nav.faq">الأسئلة</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="lang-switch" id="langSwitch" aria-label="Language">
+          <span class="lang-switch__current">ع</span>
+        </button>
+
+        <button class="theme-toggle" id="themeToggle" aria-label="Theme"></button>
+
+                <!-- حالة الزائر (غير مسجّل) -->
+        <div class="nav-auth" data-auth="anon">
+          <a href="login.html" class="btn btn-ghost btn-nav" data-i18n="cta.signin">Sign in</a>
+          <a href="signup.html" class="btn btn-primary btn-nav" data-i18n="cta.join">Join now</a>
+        </div>
+
+        <!-- حالة المسجّل -->
+        <div class="nav-auth" data-auth="authed" style="display:none">
+          <a href="dashboard.html" class="btn btn-ghost btn-nav" data-i18n="nav.my.dashboard">My dashboard</a>
+          <a href="#" class="btn btn-primary btn-nav" data-action="signout" data-i18n="dashboard.logout">Sign out</a>
+        </div>
+
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- ============ Hero ============ -->
+  <!-- ============ Hero للمسجّلين (يملأه home-auth.js) ============ -->
+  <section class="hero-member" id="heroMember" style="display:none" data-auth="authed">
+    <div class="container">
+      <div class="member-hero-grid">
+        <div class="member-hero-content">
+          <div class="member-welcome-chip">
+            <span class="dot" style="background:var(--gold)"></span>
+            <span data-i18n="home.member.greeting">Welcome back,</span>
+            <strong id="memberFirstName" data-no-translate dir="ltr">—</strong>
+          </div>
+
+          <h1 class="member-hero-title">
+            <span data-i18n="home.member.balance.label">You have</span>
+            <span class="member-points-big" id="memberPoints">—</span>
+            <span class="italic" data-i18n="home.member.balance.suffix">points ready to spend.</span>
+          </h1>
+
+          <p class="member-hero-sub" id="memberSuggestion" data-i18n="home.member.sub">
+            Redeem them now for exclusive rewards from Bahrain's top stores.
+          </p>
+
+          <div class="member-hero-cta">
+            <a href="rewards.html" class="btn btn-primary" data-i18n="home.member.cta.redeem">
+              Browse rewards
+            </a>
+            <a href="dashboard.html" class="btn btn-ghost" data-i18n="home.member.cta.dashboard">
+              My dashboard
+            </a>
+          </div>
+        </div>
+
+        <div class="member-stats">
+          <div class="member-stat-card">
+            <div class="member-stat-label" data-i18n="home.member.stat.tier">Current tier</div>
+            <div class="member-stat-value" id="memberTierName">—</div>
+            <div class="member-stat-badge" id="memberTierBadge">—</div>
+          </div>
+          <div class="member-stat-card">
+            <div class="member-stat-label" data-i18n="home.member.stat.badges">Badges earned</div>
+            <div class="member-stat-value">
+              <span id="memberBadgeCount">—</span><span class="member-stat-total">/8</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============ Hero للزوار (يُخفى عند تسجيل الدخول) ============ -->
+  <section class="hero" id="heroGuest" data-auth="anon">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <span class="eyebrow" data-i18n="hero.eyebrow">أكثر من ٢.٥ مليون عضو يربحون معنا</span>
+          <h1 class="hero-title">
+            <span data-i18n="hero.title.1">تسوّق.</span>
+            <span class="italic" data-i18n="hero.title.2">اربح نقاط.</span>
+            <span data-i18n="hero.title.3">استمتع بمكافآت لا تُنسى.</span>
+          </h1>
+          <p class="hero-sub" data-i18n="hero.sub">
+            انضم إلى نُقطة مجاناً واحصل على نقاط من كل عملية شراء عبر أكثر من ٣٢٠ متجراً شريكاً.
+            استبدل نقاطك بخصومات، هدايا، تجارب حصرية، ومكافآت تصنع الفرق.
+          </p>
+          <div class="hero-cta">
+            <a href="signup.html" class="btn btn-primary" data-i18n="hero.cta.primary">ابدأ مجاناً الآن</a>
+            <a href="#how" class="btn btn-ghost">
+              <span data-i18n="hero.cta.secondary">شاهد كيف يعمل</span> ←
+            </a>
+          </div>
+        </div>
+
+        <div class="card-wrap">
+          <div class="loyalty-card">
+            <div class="card-chip"></div>
+            <div class="card-label" data-i18n="card.balance">رصيد النقاط</div>
+            <div class="card-points">١٢,٤٨٠</div>
+            <div class="card-footer">
+              <div>
+                <div class="card-label" data-i18n="card.member" style="margin-bottom:4px">العضو</div>
+                <div class="card-name" data-i18n="card.name">سارة المنصوري</div>
+              </div>
+              <div class="card-tier" data-i18n="tier.gold">ذهبي</div>
+            </div>
+          </div>
+          <div class="floating-stat floating-stat--top">
+            <strong>+٨٥٠</strong>
+            <span data-i18n="card.stat1">نقطة هذا الشهر</span>
+          </div>
+          <div class="floating-stat floating-stat--bottom">
+            <strong data-i18n="card.stat2.num">٣ مكافآت</strong>
+            <span data-i18n="card.stat2.label">جاهزة للاستبدال</span>
+          </div>
+
+          <!-- شريط التقدم للمستوى التالي -->
+          <div class="tier-progress">
+            <div class="tier-progress-head">
+              <span data-i18n="progress.label">تقدّمك</span>
+              <span data-i18n="progress.to.platinum">٧٥٪ للبلاتيني</span>
+            </div>
+            <div class="tier-progress-bar">
+              <div class="tier-progress-fill"></div>
+            </div>
+            <div class="tier-progress-hint" data-i18n="progress.hint">
+              ٢٥٢٠ نقطة فقط للوصول إلى المستوى البلاتيني
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============ Marquee ============ -->
+  <div class="marquee">
+    <div class="marquee-track" data-i18n-track>
+      <span data-i18n="marquee.text">
+        تسوّق <span class="dot">◆</span> اربح <span class="dot">◆</span>
+        استبدل <span class="dot">◆</span> استمتع <span class="dot">◆</span>
+        تسوّق <span class="dot">◆</span> اربح <span class="dot">◆</span>
+        استبدل <span class="dot">◆</span> استمتع <span class="dot">◆</span>
+        تسوّق <span class="dot">◆</span> اربح <span class="dot">◆</span>
+        استبدل <span class="dot">◆</span> استمتع
+      </span>
+    </div>
+  </div>
+
+
+  <!-- ============ كيف يعمل ============ -->
+  <section id="how" class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="section-eyebrow" data-i18n="how.eyebrow">في أربع خطوات بسيطة</div>
+        <h2 class="section-title" data-i18n="how.title">ابدأ رحلتك اليوم</h2>
+        <p class="section-desc" data-i18n="how.desc">
+          أسهل طريقة لتربح مع كل دينار تصرفه في متاجرك المفضّلة.
+        </p>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step reveal">
+          <div class="step-num">٠١</div>
+          <h3 data-i18n="how.step1.title">سجّل مجاناً</h3>
+          <p data-i18n="how.step1.desc">أنشئ حسابك في أقل من دقيقة — بدون أي رسوم.</p>
+        </div>
+        <div class="step reveal">
+          <div class="step-num">٠٢</div>
+          <h3 data-i18n="how.step2.title">تسوّق كالمعتاد</h3>
+          <p data-i18n="how.step2.desc">اشترِ من أي متجر شريك، ونحن نحتسب نقاطك تلقائياً.</p>
+        </div>
+        <div class="step reveal">
+          <div class="step-num">٠٣</div>
+          <h3 data-i18n="how.step3.title">اجمع نقاطك</h3>
+          <p data-i18n="how.step3.desc">تابع رصيدك في التطبيق، وارتقِ بين المستويات.</p>
+        </div>
+        <div class="step reveal">
+          <div class="step-num">٠٤</div>
+          <h3 data-i18n="how.step4.title">استبدل واستمتع</h3>
+          <p data-i18n="how.step4.desc">اختر مكافأتك من كتالوج ضخم واستلمها فوراً.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============ حاسبة النقاط ============ -->
+  <section class="section section--soft">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="section-eyebrow" data-i18n="calc.eyebrow">احسب أرباحك</div>
+        <h2 class="section-title" data-i18n="calc.title">كم ستربح شهرياً؟</h2>
+        <p class="section-desc" data-i18n="calc.desc">
+          حرّك الشريط لتعرف كم نقطة ستحصل عليها بناءً على مستواك.
+        </p>
+      </div>
+
+      <div class="calculator reveal">
+        <div class="calculator-inner">
+          <div class="calc-input-group">
+            <label for="spendSlider">
+              <span data-i18n="calc.label.spend">إنفاقك الشهري المتوقّع</span>
+              <strong id="spendValue">100</strong>
+              <span class="calc-unit" data-i18n="calc.currency">د.ب</span>
+            </label>
+            <input type="range" id="spendSlider" class="calc-slider"
+                   min="10" max="500" step="10" value="100">
+            <div class="calc-range-labels">
+              <span>10</span>
+              <span>500</span>
+            </div>
+          </div>
+
+          <div class="calc-tier-switch">
+            <label data-i18n="calc.label.tier">مستواك الحالي:</label>
+            <div class="tier-pills" id="tierPills">
+              <button class="tier-pill" data-tier="1" data-i18n="tier.bronze">برونزي</button>
+              <button class="tier-pill" data-tier="1.5" data-i18n="tier.silver">فضي</button>
+              <button class="tier-pill active" data-tier="2" data-i18n="tier.gold">ذهبي</button>
+              <button class="tier-pill" data-tier="3" data-i18n="tier.platinum">بلاتيني</button>
+            </div>
+          </div>
+
+          <div class="calc-result">
+            <div class="calc-result-row">
+              <span data-i18n="calc.result.monthly">نقاطك الشهرية</span>
+              <strong id="monthlyPoints">١,٠٠٠</strong>
+            </div>
+            <div class="calc-result-divider"></div>
+            <div class="calc-result-row calc-result-row--big">
+              <span data-i18n="calc.result.yearly">إجمالي سنوي</span>
+              <strong id="yearlyPoints">١٢,٠٠٠</strong>
+            </div>
+            <div class="calc-result-note">
+              <span data-i18n="calc.result.note">يعادل خصماً بقيمة</span>
+              <strong id="discountValue">١٢٠</strong>
+              <span data-i18n="calc.currency">د.ب</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============ كتالوج المكافآت ============ -->
+  <section id="rewards" class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="section-eyebrow" data-i18n="rewards.eyebrow">مكافآت استثنائية</div>
+        <h2 class="section-title" data-i18n="rewards.title">اختر ما يُسعدك</h2>
+        <p class="section-desc" data-i18n="rewards.desc">
+          أكثر من ١٠٠٠ مكافأة تنتظرك — من الخصومات إلى التجارب الفاخرة.
+        </p>
+      </div>
+
+      <div class="rewards-grid">
+
+        <article class="reward-card reveal">
+          <div class="reward-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M20 12V8H6a2 2 0 010-4h12v4"/><path d="M20 12v4H6a2 2 0 100 4h14v-4"/>
+            </svg>
+          </div>
+          <div class="reward-cost">
+            <span data-i18n="rewards.from">ابتداءً من</span>
+            <strong>٥٠٠</strong>
+            <span data-i18n="points.label">نقطة</span>
+          </div>
+          <h3 data-i18n="rewards.1.title">خصومات فورية</h3>
+          <p data-i18n="rewards.1.desc">كوبونات خصم في أكثر من ٣٢٠ متجراً، قابلة للاستخدام فوراً.</p>
+        </article>
+
+        <article class="reward-card reveal">
+          <div class="reward-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="3" y="8" width="18" height="13" rx="2"/>
+              <path d="M12 8v13M3 12h18M7 8V5a2 2 0 012-2h0a2 2 0 012 2v3M17 8V5a2 2 0 00-2-2h0a2 2 0 00-2 2v3"/>
+            </svg>
+          </div>
+          <div class="reward-cost">
+            <span data-i18n="rewards.from">ابتداءً من</span>
+            <strong>١,٢٠٠</strong>
+            <span data-i18n="points.label">نقطة</span>
+          </div>
+          <h3 data-i18n="rewards.2.title">هدايا فاخرة</h3>
+          <p data-i18n="rewards.2.desc">منتجات مختارة بعناية، من عطور إلى إلكترونيات راقية.</p>
+        </article>
+
+        <article class="reward-card reward-card--featured reveal">
+          <div class="reward-badge" data-i18n="rewards.hot">الأكثر طلباً</div>
+          <div class="reward-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M18 8h1a4 4 0 010 8h-1"/>
+              <path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/>
+              <line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>
+            </svg>
+          </div>
+          <div class="reward-cost">
+            <span data-i18n="rewards.from">ابتداءً من</span>
+            <strong>٢,٥٠٠</strong>
+            <span data-i18n="points.label">نقطة</span>
+          </div>
+          <h3 data-i18n="rewards.3.title">تجارب مطاعم</h3>
+          <p data-i18n="rewards.3.desc">عشاء لشخصين في أرقى مطاعم المنطقة، على حسابنا.</p>
+        </article>
+
+        <article class="reward-card reveal">
+          <div class="reward-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/>
+            </svg>
+          </div>
+          <div class="reward-cost">
+            <span data-i18n="rewards.from">ابتداءً من</span>
+            <strong>٨,٠٠٠</strong>
+            <span data-i18n="points.label">نقطة</span>
+          </div>
+          <h3 data-i18n="rewards.4.title">تذاكر سفر</h3>
+          <p data-i18n="rewards.4.desc">رحلات داخلية وإقليمية عبر شراكاتنا مع كبرى شركات الطيران.</p>
+        </article>
+
+        <article class="reward-card reveal">
+          <div class="reward-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+            </svg>
+          </div>
+          <div class="reward-cost">
+            <span data-i18n="rewards.from">ابتداءً من</span>
+            <strong>٥,٠٠٠</strong>
+            <span data-i18n="points.label">نقطة</span>
+          </div>
+          <h3 data-i18n="rewards.5.title">إقامات فندقية</h3>
+          <p data-i18n="rewards.5.desc">ليالٍ في أفخم الفنادق المحلية والإقليمية.</p>
+        </article>
+
+        <article class="reward-card reveal">
+          <div class="reward-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/>
+            </svg>
+          </div>
+          <div class="reward-cost">
+            <span data-i18n="rewards.from">ابتداءً من</span>
+            <strong>٣,٠٠٠</strong>
+            <span data-i18n="points.label">نقطة</span>
+          </div>
+          <h3 data-i18n="rewards.6.title">تجارب ترفيهية</h3>
+          <p data-i18n="rewards.6.desc">تذاكر حفلات، سباقات، ومناسبات حصرية للأعضاء فقط.</p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============ المتاجر الشريكة ============ -->
+  <section class="partners-section">
+    <div class="container">
+      <div class="section-head section-head--small reveal">
+        <h2 class="section-title-small" data-i18n="partners.title">
+          شراكات مع أفضل العلامات التجارية
+        </h2>
+      </div>
+      <div class="partners-grid reveal">
+        <div class="partner-logo accent-font">Lilou</div>
+        <div class="partner-logo">VILLA MAMAS</div>
+        <div class="partner-logo accent-font">Haji Gahwa</div>
+        <div class="partner-logo">SAFFRON</div>
+        <div class="partner-logo accent-font">Masso</div>
+        <div class="partner-logo">MAD MONKEY</div>
+        <div class="partner-logo accent-font">Cantina Kahlo</div>
+        <div class="partner-logo">COCO'S</div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============ المستويات ============ -->
+  <section id="tiers" class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="section-eyebrow" data-i18n="tiers.eyebrow">نظام المستويات</div>
+        <h2 class="section-title" data-i18n="tiers.title">كلّما تسوّقت، زاد ربحك</h2>
+        <p class="section-desc" data-i18n="tiers.desc">
+          ارتقِ بين أربعة مستويات واحصل على امتيازات أكبر في كل خطوة.
+        </p>
+      </div>
+
+      <div class="tiers-grid">
+
+        <article class="tier tier--bronze reveal">
+          <div class="tier-medal" data-i18n="tier.medal.bronze">ب</div>
+          <h3 data-i18n="tier.bronze">برونزي</h3>
+          <div class="tier-range" data-i18n="tier.range.1">من ٠ إلى ٩٩٩ نقطة</div>
+          <ul class="tier-list">
+            <li data-i18n="tier.bronze.1">نقطة لكل دينار تُنفقه</li>
+            <li data-i18n="tier.bronze.2">عروض حصرية للأعضاء</li>
+            <li data-i18n="tier.bronze.3">بطاقة رقمية مجانية</li>
+          </ul>
+        </article>
+
+        <article class="tier tier--silver reveal">
+          <div class="tier-medal" data-i18n="tier.medal.silver">ف</div>
+          <h3 data-i18n="tier.silver">فضي</h3>
+          <div class="tier-range" data-i18n="tier.range.2">من ١٠٠٠ إلى ٤٩٩٩</div>
+          <ul class="tier-list">
+            <li data-i18n="tier.silver.1">١.٥ نقطة لكل دينار</li>
+            <li data-i18n="tier.silver.2">هدية عيد ميلاد</li>
+            <li data-i18n="tier.silver.3">شحن مجاني</li>
+            <li data-i18n="tier.silver.4">دعم مخصّص</li>
+          </ul>
+        </article>
+
+        <article class="tier tier--gold tier--featured reveal">
+          <div class="tier-badge" data-i18n="tier.popular">الأكثر شعبية</div>
+          <div class="tier-medal" data-i18n="tier.medal.gold">ذ</div>
+          <h3 data-i18n="tier.gold">ذهبي</h3>
+          <div class="tier-range" data-i18n="tier.range.3">من ٥٠٠٠ إلى ١٩٩٩٩</div>
+          <ul class="tier-list">
+            <li data-i18n="tier.gold.1">٢ نقطة لكل دينار</li>
+            <li data-i18n="tier.gold.2">وصول مبكر للمنتجات</li>
+            <li data-i18n="tier.gold.3">تغليف فاخر مجاني</li>
+            <li data-i18n="tier.gold.4">دعوات لفعاليات حصرية</li>
+            <li data-i18n="tier.gold.5">خصم ١٥٪ دائم</li>
+          </ul>
+        </article>
+
+        <article class="tier tier--platinum reveal">
+          <div class="tier-medal" data-i18n="tier.medal.platinum">ب</div>
+          <h3 data-i18n="tier.platinum">بلاتيني</h3>
+          <div class="tier-range" data-i18n="tier.range.4">٢٠٠٠٠ نقطة وأكثر</div>
+          <ul class="tier-list">
+            <li data-i18n="tier.platinum.1">٣ نقاط لكل دينار</li>
+            <li data-i18n="tier.platinum.2">مستشار شخصي</li>
+            <li data-i18n="tier.platinum.3">تجارب VIP حصرية</li>
+            <li data-i18n="tier.platinum.4">شحن عالمي مجاني</li>
+            <li data-i18n="tier.platinum.5">هدايا فصلية فاخرة</li>
+          </ul>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============ الإحصائيات ============ -->
+  <section class="stats-section">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat reveal">
+          <div class="stat-num" data-counter="2500000" data-suffix="+" data-format="short">٠</div>
+          <div class="stat-label" data-i18n="stats.members">عضو نشط</div>
+        </div>
+        <div class="stat reveal">
+          <div class="stat-num" data-counter="87" data-suffix="٪">٠</div>
+          <div class="stat-label" data-i18n="stats.retention">راضون عن التجربة</div>
+        </div>
+        <div class="stat reveal">
+          <div class="stat-num" data-counter="320" data-suffix="+">٠</div>
+          <div class="stat-label" data-i18n="stats.partners">متجر شريك</div>
+        </div>
+        <div class="stat reveal">
+          <div class="stat-num" data-counter="4.9" data-decimals="1">٠</div>
+          <div class="stat-label" data-i18n="stats.rating">تقييم التطبيق</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============ شهادة ============ -->
+  <section class="section">
+    <div class="container">
+      <div class="testimonial reveal">
+        <div class="quote-mark">"</div>
+        <p class="testimonial-text" data-i18n="testimonial.text">
+          منذ انضممت إلى نُقطة، أشعر أن كل دينار أصرفه يعود إليّ بطريقة ما.
+          في آخر شهر فقط استبدلت نقاطي بعشاء فاخر لم أكن أتخيّل أنني أستحقّه.
+        </p>
+        <div class="testimonial-author">
+          <div class="author-info">
+            <div class="author-name" data-i18n="testimonial.name">ريم الهاشمي</div>
+            <div class="author-role" data-i18n="testimonial.role">عضو ذهبي منذ ٢٠٢٤</div>
+          </div>
+          <div class="avatar">ر</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============ FAQ ============ -->
+  <section id="faq" class="section section--soft">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="section-eyebrow" data-i18n="faq.eyebrow">لا تتردد في السؤال</div>
+        <h2 class="section-title" data-i18n="faq.title">الأسئلة الشائعة</h2>
+      </div>
+
+      <div class="faq-list reveal">
+
+        <details class="faq-item">
+          <summary>
+            <span data-i18n="faq.1.q">هل الانضمام إلى نُقطة مجاني فعلاً؟</span>
+            <span class="faq-icon">+</span>
+          </summary>
+          <p data-i18n="faq.1.a">نعم، تماماً. الحساب الأساسي مجاني للأبد ويتيح لك كسب النقاط من كل متاجرنا الشريكة. لدينا أيضاً باقات مميّزة اختيارية لمن يريد نقاطاً مضاعفة ومزايا إضافية.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>
+            <span data-i18n="faq.2.q">كيف أحتسب النقاط في المتاجر الشريكة؟</span>
+            <span class="faq-icon">+</span>
+          </summary>
+          <p data-i18n="faq.2.a">كل ما عليك فعله هو إدخال رقم عضويتك عند الدفع، أو الدفع عبر تطبيق نُقطة مباشرة. النقاط تُضاف إلى حسابك تلقائياً خلال ثوانٍ.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>
+            <span data-i18n="faq.3.q">متى تنتهي صلاحية النقاط؟</span>
+            <span class="faq-icon">+</span>
+          </summary>
+          <p data-i18n="faq.3.a">النقاط صالحة لمدة ٢٤ شهراً من تاريخ كسبها. أعضاء المستوى الذهبي والبلاتيني لا تنتهي صلاحية نقاطهم إطلاقاً.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>
+            <span data-i18n="faq.4.q">هل يمكنني نقل نقاطي إلى شخص آخر؟</span>
+            <span class="faq-icon">+</span>
+          </summary>
+          <p data-i18n="faq.4.a">نعم. يمكن لأعضاء المستوى الذهبي والبلاتيني إهداء نقاطهم لأي عضو آخر عبر التطبيق، بحد أقصى ٥٠٠٠ نقطة شهرياً.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>
+            <span data-i18n="faq.5.q">كيف أرتقي إلى مستوى أعلى؟</span>
+            <span class="faq-icon">+</span>
+          </summary>
+          <p data-i18n="faq.5.a">بمجرد وصولك إلى الحد الأدنى لأي مستوى، يتم تحديث مستواك تلقائياً خلال ٢٤ ساعة. تحصل فوراً على كل مزايا المستوى الجديد دون أي إجراء إضافي.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>
+            <span data-i18n="faq.6.q">هل يمكنني استخدام نُقطة خارج المنطقة؟</span>
+            <span class="faq-icon">+</span>
+          </summary>
+          <p data-i18n="faq.6.a">نعم. أعضاء المستوى البلاتيني يستفيدون من شبكة شركاء عالمية تشمل أكثر من ٢٠ دولة، ويمكنهم استخدام نقاطهم في رحلاتهم أيضاً.</p>
+        </details>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============ CTA ============ -->
+  <section id="cta" class="section">
+    <div class="container">
+      <div class="cta-box reveal">
+        <h2 data-i18n="cta.title">انضم اليوم وابدأ الربح فوراً</h2>
+        <p data-i18n="cta.desc">٥٠٠ نقطة ترحيبية هدية لك عند التسجيل. بدون رسوم، بدون التزامات.</p>
+        <div class="cta-buttons">
+          <a href="signup.html" class="btn btn-primary" data-i18n="cta.btn.primary">أنشئ حسابك مجاناً</a>
+          <a href="pricing.html" class="btn btn-ghost" data-i18n="cta.btn.secondary">استكشف الباقات</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============ Footer ============ -->
+  <footer id="contact" class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div class="logo">
+            <span class="logo-mark">◆</span>
+            <span data-i18n="brand.name">نُقطة</span>
+          </div>
+          <p class="footer-tagline" data-i18n="footer.tagline">
+            منصة المكافآت الأولى. كل عملية شراء تستحقّ أن تُكافأ.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4 data-i18n="footer.product">المنتج</h4>
+          <ul>
+            <li><a href="#how" data-i18n="footer.howItWorks">كيف يعمل</a></li>
+            <li><a href="pricing.html" data-i18n="footer.pricing">الباقات</a></li>
+            <li><a href="#rewards" data-i18n="footer.rewards">المكافآت</a></li>
+            <li><a href="#" data-i18n="footer.app">التطبيق</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 data-i18n="footer.company">الشركة</h4>
+          <ul>
+            <li><a href="#" data-i18n="footer.about">من نحن</a></li>
+            <li><a href="#" data-i18n="footer.blog">المدوّنة</a></li>
+            <li><a href="#" data-i18n="footer.careers">الوظائف</a></li>
+            <li><a href="#" data-i18n="footer.contact">تواصل معنا</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 data-i18n="footer.support">الدعم</h4>
+          <ul>
+            <li><a href="#faq" data-i18n="footer.faq">الأسئلة الشائعة</a></li>
+            <li><a href="#" data-i18n="footer.help">مركز المساعدة</a></li>
+            <li><a href="#" data-i18n="footer.terms">الشروط والأحكام</a></li>
+            <li><a href="#" data-i18n="footer.privacy">الخصوصية</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div data-i18n="footer.copyright">© ٢٠٢٦ نُقطة. جميع الحقوق محفوظة.</div>
+        <div data-i18n="footer.made">صُنع بحرفية في البحرين ◆</div>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- السكربتات -->
+  <script src="js/translations.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/user.js"></script>
+  <script src="js/referral.js"></script>
+  <script src="js/auth-ui.js"></script>
+  <script src="js/toast.js"></script>
+  <script src="js/confetti.js"></script>
+  <script src="js/achievements.js"></script>
+  <script src="js/toast.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/counter.js"></script>
+  <script src="js/home-auth.js"></script>
+  <script src="js/calculator.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,938 @@
+/* ============================================================
+   responsive.css
+   ------------------------------------------------------------
+   التكيف مع الأحجام المختلفة (Media Queries).
+   مرتّبة من الأكبر إلى الأصغر.
+   ============================================================ */
+
+
+/* ============================================================
+   التابلت والشاشات المتوسطة (< 968px)
+   ============================================================ */
+@media (max-width: 968px) {
+
+  /* Hero يصير عمود واحد */
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+    text-align: center;
+  }
+
+  .hero-cta {
+    justify-content: center;
+  }
+
+  .eyebrow {
+    margin-inline: auto;
+  }
+
+  .card-wrap {
+    min-height: 400px;
+  }
+
+  /* الخطوات على عمودين */
+  .steps-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* المستويات على عمودين */
+  .tiers-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* المكافآت على عمودين */
+  .rewards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* الشركاء على ٤ أعمدة */
+  .partners-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+  }
+
+  /* الإحصائيات على عمودين */
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+  }
+
+  /* الفوتر على عمودين */
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+  }
+
+  /* صفحة الأسعار: عمود واحد ولكن المميزة تبقى مع الترتيب */
+  .pricing-grid {
+    grid-template-columns: 1fr;
+    max-width: 500px;
+  }
+
+  .pricing-card--featured {
+    transform: none;
+    order: -1;
+  }
+
+  .pricing-card--featured:hover {
+    transform: translateY(-8px);
+  }
+
+  /* الحاسبة */
+  .calculator-inner {
+    padding: 32px 24px;
+  }
+
+  .calc-input-group label strong {
+    font-size: 32px;
+  }
+
+  /* جدول المقارنة يصير قابل للسكرول الأفقي */
+  .compare-table {
+    overflow-x: auto;
+  }
+
+  .compare-table table {
+    min-width: 600px;
+  }
+}
+
+
+/* ============================================================
+   الهواتف (< 768px) — تظهر قائمة الهامبرغر
+   ============================================================ */
+@media (max-width: 768px) {
+
+  /* إظهار زر الهامبرغر */
+  .hamburger {
+    display: flex;
+  }
+
+  /* تحويل القائمة إلى Drawer منزلق من الأعلى */
+  .nav-links {
+    position: fixed;
+    top: 80px;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    background: var(--bg-soft);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 24px 32px;
+    gap: 0;
+    transform: translateY(-120%);
+    transition: transform var(--transition-slow);
+    z-index: 99;
+  }
+
+  .nav-links.is-open {
+    transform: translateY(0);
+  }
+
+  .nav-links li {
+    width: 100%;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .nav-links li:last-child {
+    border-bottom: none;
+  }
+
+  .nav-links a {
+    display: block;
+    padding: 16px 0;
+    font-size: 16px;
+  }
+
+  /* إخفاء زر "انضم" من الـ navbar في الهواتف (موجود داخل القائمة) */
+  .btn-nav {
+    display: none;
+  }
+
+  /* تقليل المسافات */
+  .section {
+    padding: 80px 0;
+  }
+
+  /* عناوين أصغر */
+  .hero-title {
+    font-size: 44px;
+  }
+
+  .hero-sub {
+    font-size: 16px;
+  }
+
+  .section-title {
+    font-size: 32px;
+  }
+
+  /* المكافآت والخطوات والمستويات كلها عمود واحد */
+  .rewards-grid,
+  .steps-grid,
+  .tiers-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* الإحصائيات عمود واحد */
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  .stat-num {
+    font-size: 36px;
+  }
+
+  /* الشركاء على عمودين */
+  .partners-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  /* الفوتر عمود واحد */
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  /* الشهادة */
+  .testimonial {
+    padding: 40px 24px;
+  }
+
+  .testimonial-text {
+    font-size: 20px;
+  }
+
+  /* الـ CTA */
+  .cta-box {
+    padding: 48px 28px;
+  }
+
+  /* Marquee أبطأ وأصغر */
+  .marquee-track {
+    font-size: 22px;
+  }
+
+  /* بطاقة الولاء أصغر */
+  .loyalty-card {
+    width: 300px;
+    height: 190px;
+    padding: 22px;
+  }
+
+  .card-points {
+    font-size: 30px;
+  }
+
+  /* الإحصائيات العائمة أصغر */
+  .floating-stat {
+    padding: 10px 14px;
+  }
+
+  .floating-stat strong {
+    font-size: 16px;
+  }
+
+  /* مبدّل الفوترة: البادج يتحرك لأسفل */
+  .billing-badge {
+    inset-inline-end: auto;
+    inset-inline-start: 50%;
+    transform: translateX(50%);
+    top: -28px;
+  }
+
+  /* الحاسبة: الأزرار تلتف لعدة أسطر */
+  .tier-pills {
+    justify-content: center;
+  }
+
+  .calc-input-group label {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+}
+
+
+/* ============================================================
+   الهواتف الصغيرة (< 480px)
+   ============================================================ */
+@media (max-width: 480px) {
+
+  :root {
+    --container-padding: 20px;
+  }
+
+  .btn {
+    padding: 14px 28px;
+    font-size: 14px;
+  }
+
+  .hero {
+    padding-top: 120px;
+  }
+
+  .hero-title {
+    font-size: 36px;
+  }
+
+  .section-title {
+    font-size: 28px;
+  }
+
+  .loyalty-card {
+    width: 280px;
+    height: 180px;
+  }
+
+  .cta-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .cta-buttons .btn {
+    width: 100%;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .pricing-card {
+    padding: 32px 24px;
+  }
+
+  .pricing-amount {
+    font-size: 48px;
+  }
+}
+
+
+/* ============================================================
+   تحسينات إضافية للهواتف (>= v4)
+   ============================================================ */
+@media (max-width: 768px) {
+
+  /* أزرار المصادقة في الـ navbar — تظل مرئية لكن أصغر */
+  .nav-auth {
+    gap: 6px;
+  }
+  .nav-auth .btn-nav {
+    display: inline-flex;
+    padding: 8px 14px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  /* إخفاء زر Ghost في الهواتف الضيقة (نخلي زر واحد بس للمصادقة) */
+  .nav-auth .btn-ghost.btn-nav {
+    display: none;
+  }
+
+  /* تقليل حشوة الـ navbar عشان المساحة */
+  .nav-actions {
+    gap: 8px;
+  }
+
+  /* زر الثيم واللغة أصغر في الهواتف */
+  .lang-switch,
+  .theme-toggle {
+    width: 36px;
+    height: 36px;
+  }
+
+  /* Dashboard: البطاقات الكبيرة لعمود واحد */
+  .dashboard-main-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px;
+  }
+
+  .dashboard-hero {
+    padding-top: 100px;
+  }
+
+  /* المعاملات: تُعرض بعمودين فقط */
+  .transaction {
+    grid-template-columns: auto 1fr auto !important;
+    padding: 14px 16px !important;
+    gap: 10px !important;
+  }
+
+  .tx-amount {
+    display: none !important;
+  }
+
+  .tx-logo {
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 15px !important;
+  }
+
+  .tx-name {
+    font-size: 14px !important;
+  }
+
+  .tx-points {
+    font-size: 17px !important;
+  }
+
+  /* Profile على الهاتف */
+  .profile-section {
+    padding-top: 100px !important;
+  }
+
+  .profile-card {
+    padding: 24px 20px !important;
+  }
+
+  /* Login/Signup cards أصغر */
+  .signup-card {
+    padding: 32px 22px !important;
+  }
+
+  /* Interest tags على الهواتف */
+  .interest-tag {
+    font-size: 12px;
+    padding: 8px 14px;
+  }
+
+  /* شريط التقدم داخل Hero — مخفي في الهواتف (مزدحم) */
+  .tier-progress {
+    display: none;
+  }
+
+  /* الـ dashboard-welcome-row تصير عمود */
+  .dashboard-welcome-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  /* Toast container مساحة أقل */
+  .toast-container {
+    top: 70px !important;
+  }
+}
+
+
+/* ============================================================
+   الهواتف الصغيرة (< 420px)
+   ============================================================ */
+@media (max-width: 420px) {
+
+  /* زر المصادقة الأساسي فقط */
+  .nav-auth .btn-nav {
+    padding: 7px 11px;
+    font-size: 11px;
+  }
+
+  /* الإحصائيات عمودين × ٢ */
+  .stats-mini-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+  }
+
+  .stat-mini {
+    padding: 18px 14px !important;
+  }
+
+  .stat-mini-num {
+    font-size: 28px !important;
+  }
+
+  .stat-mini-label {
+    font-size: 12px !important;
+  }
+
+  /* Balance card — الحجم */
+  .balance-card-bg {
+    padding: 28px 22px !important;
+    min-height: 260px !important;
+  }
+
+  .balance-amount {
+    font-size: 56px !important;
+  }
+
+  /* إخفاء زر اللغة المنفصل (يبقى داخل الهامبرغر لو موجود) */
+  .panel-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+
+/* ============================================================
+   إصلاحات Mobile الشاملة — V2
+   ------------------------------------------------------------
+   تحسينات أخيرة للهواتف لجعل التجربة سلسة
+   ============================================================ */
+
+
+/* ---------- Profile: قسم الدعوة + QR ---------- */
+@media (max-width: 720px) {
+  .invite-wrap {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+    align-items: stretch !important;
+  }
+
+  .invite-qr {
+    order: 1;
+    align-items: center !important;
+  }
+
+  .invite-info {
+    order: 2;
+  }
+
+  /* QR أصغر بقليل ليتناسب */
+  .invite-qr-frame {
+    min-width: 160px !important;
+    min-height: 160px !important;
+    padding: 12px !important;
+  }
+
+  .qr-image {
+    width: 160px !important;
+    height: 160px !important;
+  }
+
+  /* Code + link boxes — نخلي النص قابل للـ wrap */
+  .invite-code-box {
+    flex-wrap: nowrap;
+    padding: 8px 10px !important;
+  }
+
+  .invite-code-box code {
+    font-size: 11px !important;
+    min-width: 0;
+    flex: 1 1 0;
+  }
+
+  .invite-copy-btn {
+    width: 30px !important;
+    height: 30px !important;
+    font-size: 13px !important;
+    flex-shrink: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  /* على الشاشات الأصغر نخفي الرابط ونخلي الكود فقط */
+  .invite-code-box code {
+    font-size: 10px !important;
+  }
+
+  /* أزرار المشاركة تصير عمود كامل */
+  .invite-actions {
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+
+  .invite-actions .btn {
+    width: 100% !important;
+    flex: none !important;
+    min-width: 0 !important;
+    justify-content: center !important;
+  }
+}
+
+
+/* ---------- قائمة المدعوّين على الهاتف ---------- */
+@media (max-width: 480px) {
+  .invite-item {
+    padding: 10px 12px !important;
+    gap: 10px !important;
+  }
+
+  .invite-item-avatar {
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 13px !important;
+  }
+
+  .invite-item-name {
+    font-size: 13px !important;
+  }
+
+  .invite-item-bonus {
+    font-size: 14px !important;
+  }
+}
+
+
+/* ---------- Profile cards: padding أصغر على الهاتف ---------- */
+@media (max-width: 480px) {
+  .profile-card {
+    padding: 20px 16px !important;
+  }
+
+  .profile-card-title {
+    font-size: 17px !important;
+  }
+
+  .profile-card-sub {
+    font-size: 13px !important;
+  }
+
+  /* الحقول — padding مريح */
+  .form-input {
+    padding: 12px 14px !important;
+    font-size: 14px !important;
+  }
+
+  /* Interest tags أصغر */
+  .interest-tag {
+    padding: 7px 12px !important;
+    font-size: 11px !important;
+  }
+}
+
+
+/* ---------- صفحة Rewards على الهاتف ---------- */
+@media (max-width: 600px) {
+  .rewards-hero {
+    padding-top: 100px !important;
+    padding-bottom: 20px !important;
+  }
+
+  .rewards-title {
+    font-size: 28px !important;
+  }
+
+  .rewards-sub {
+    font-size: 14px !important;
+  }
+
+  .rewards-balance {
+    padding: 20px 16px !important;
+  }
+
+  .rewards-balance-num {
+    font-size: 48px !important;
+  }
+
+  .rewards-filters {
+    gap: 6px !important;
+    overflow-x: auto;
+    flex-wrap: nowrap !important;
+    justify-content: flex-start !important;
+    padding: 4px 0;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .filter-pill {
+    flex-shrink: 0;
+    font-size: 12px !important;
+    padding: 7px 14px !important;
+  }
+
+  .rewards-catalog {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  .reward-item {
+    padding: 20px 18px !important;
+  }
+
+  .reward-emoji {
+    font-size: 36px !important;
+  }
+
+  .reward-item-title {
+    font-size: 15px !important;
+  }
+
+  /* سجل الاستبدالات — على الهاتف نعرض الكود تحت */
+  .redemption-item {
+    flex-wrap: wrap !important;
+    padding: 12px 14px !important;
+  }
+
+  .redemption-info {
+    width: 100%;
+  }
+
+  .redemption-code {
+    order: 3;
+    margin-top: 6px;
+  }
+
+  .redemption-points {
+    min-width: auto !important;
+  }
+}
+
+
+/* ---------- Transactions page ---------- */
+@media (max-width: 600px) {
+  .tx-hero {
+    padding-top: 100px !important;
+  }
+
+  .tx-summary {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 8px !important;
+  }
+
+  .tx-summary-item {
+    padding: 14px 10px !important;
+  }
+
+  .tx-summary-label {
+    font-size: 10px !important;
+    letter-spacing: 0.3px !important;
+  }
+
+  .tx-summary-value {
+    font-size: 18px !important;
+  }
+
+  .tx-item {
+    grid-template-columns: auto 1fr auto !important;
+    padding: 12px 14px !important;
+    gap: 10px !important;
+  }
+
+  .tx-item-store {
+    font-size: 14px !important;
+  }
+
+  .tx-item-meta {
+    font-size: 11px !important;
+    gap: 6px !important;
+  }
+
+  .tx-item-code {
+    font-size: 10px !important;
+    padding: 1px 6px !important;
+  }
+
+  .tx-item-points {
+    font-size: 16px !important;
+  }
+}
+
+
+/* ---------- Dashboard: Challenges على الهاتف ---------- */
+@media (max-width: 600px) {
+  .challenges-grid {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+  .challenge-card {
+    padding: 14px 16px !important;
+  }
+
+  .challenge-head {
+    gap: 10px !important;
+    margin-bottom: 12px !important;
+  }
+
+  .challenge-icon {
+    font-size: 24px !important;
+  }
+
+  .challenge-title {
+    font-size: 14px !important;
+  }
+
+  .challenge-desc {
+    font-size: 12px !important;
+  }
+
+  .challenge-reward {
+    font-size: 11px !important;
+    padding: 3px 8px !important;
+  }
+
+  .challenge-progress-text {
+    font-size: 11px !important;
+  }
+}
+
+
+/* ---------- Home hero member على الهاتف ---------- */
+@media (max-width: 600px) {
+  .member-hero-title {
+    font-size: 28px !important;
+  }
+
+  .member-points-big {
+    font-size: 42px !important;
+  }
+
+  .member-hero-sub {
+    font-size: 14px !important;
+  }
+
+  .member-stat-card {
+    padding: 18px 20px !important;
+  }
+
+  .member-stat-value {
+    font-size: 26px !important;
+  }
+
+  .member-stat-badge {
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 14px !important;
+    top: 16px !important;
+  }
+}
+
+
+/* ---------- Learn page على الهاتف ---------- */
+@media (max-width: 600px) {
+  .learn-hero {
+    padding-top: 100px !important;
+    padding-bottom: 24px !important;
+  }
+
+  .learn-title {
+    font-size: 30px !important;
+  }
+
+  .learn-sub {
+    font-size: 14px !important;
+  }
+
+  .tips-grid {
+    gap: 14px !important;
+  }
+
+  .tip-card {
+    padding: 22px 18px !important;
+  }
+
+  .tip-num {
+    font-size: 30px !important;
+  }
+
+  .tip-icon {
+    font-size: 32px !important;
+  }
+
+  .tip-title {
+    font-size: 17px !important;
+  }
+
+  .tip-desc {
+    font-size: 13px !important;
+  }
+
+  .tip-highlight {
+    font-size: 12px !important;
+    padding: 6px 10px !important;
+  }
+}
+
+
+/* ---------- Tablets (768-968) — padding متوسط ---------- */
+@media (min-width: 601px) and (max-width: 900px) {
+  .profile-section,
+  .rewards-hero,
+  .tx-hero,
+  .learn-hero,
+  .hero-member {
+    padding-top: 120px;
+  }
+
+  /* على التابلت نسمح بـ ٢ أعمدة */
+  .rewards-catalog {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .tips-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .challenges-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ---------- تحسينات عامة على الهاتف ---------- */
+@media (max-width: 600px) {
+  /* الـ container padding متوازن */
+  .container {
+    padding-inline: 16px;
+  }
+
+  /* أزرار navbar أضيق */
+  .nav-auth {
+    gap: 4px !important;
+  }
+
+  .nav-auth .btn-nav {
+    padding: 7px 12px !important;
+    font-size: 11px !important;
+  }
+
+  /* على الهواتف الصغيرة جداً نظهر زر واحد فقط في navbar */
+  .nav-auth[data-auth="authed"] .btn-ghost {
+    display: none !important;
+  }
+
+  /* empty states أصغر */
+  .empty-state {
+    padding: 40px 20px !important;
+  }
+
+  .empty-icon {
+    font-size: 40px !important;
+  }
+
+  .empty-state h3 {
+    font-size: 17px !important;
+  }
+
+  .empty-state p {
+    font-size: 13px !important;
+  }
+
+  /* panel-head ينفسح */
+  .panel-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px !important;
+  }
+
+  .panel-title {
+    font-size: 22px !important;
+  }
+
+  .panel-sub {
+    font-size: 13px !important;
+  }
+}
+
+
+/* ---------- الشاشات الصغيرة جداً (<400) ---------- */
+@media (max-width: 400px) {
+  .rewards-balance-num {
+    font-size: 42px !important;
+  }
+
+  .tx-summary-value {
+    font-size: 16px !important;
+  }
+
+  /* نقلل من padding navbar */
+  .nav-inner {
+    padding-inline: 12px;
+  }
+
+  .logo {
+    font-size: 16px;
+  }
+}

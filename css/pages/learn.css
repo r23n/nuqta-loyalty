@@ -1,0 +1,134 @@
+/* ============================================================
+   pages/learn.css — صفحة كيف تكسب أكثر
+   ============================================================ */
+
+.learn-hero {
+  padding: 140px 0 40px;
+  text-align: center;
+  position: relative;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(201, 169, 97, 0.08) 0%, transparent 50%);
+}
+
+.learn-head {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.learn-title {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 5.5vw, 64px);
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 16px;
+  letter-spacing: -0.02em;
+}
+
+.learn-sub {
+  color: var(--cream-dim);
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+
+/* شبكة النصائح */
+.tips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.tip-card {
+  position: relative;
+  padding: 36px 32px 32px;
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  transition: transform 0.25s ease, border-color 0.25s ease;
+  overflow: hidden;
+}
+
+.tip-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(201, 169, 97, 0.3);
+}
+
+/* الرقم في الخلفية */
+.tip-num {
+  position: absolute;
+  top: 16px;
+  inset-inline-end: 24px;
+  font-family: var(--font-display);
+  font-size: 48px;
+  font-weight: 900;
+  color: var(--gold);
+  opacity: 0.12;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.tip-icon {
+  font-size: 40px;
+  line-height: 1;
+  margin-bottom: 18px;
+}
+
+.tip-title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--cream);
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+
+.tip-desc {
+  color: var(--cream-dim);
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 18px;
+}
+
+/* Highlight صغير */
+.tip-highlight {
+  display: inline-block;
+  padding: 8px 14px;
+  background: rgba(201, 169, 97, 0.1);
+  border-inline-start: 3px solid var(--gold);
+  border-radius: 4px;
+  color: var(--gold);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.tip-highlight strong {
+  font-family: var(--font-body);
+  font-weight: 700;
+}
+
+
+/* CTA */
+.learn-cta {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.learn-cta p {
+  color: var(--cream-dim);
+  font-size: 16px;
+}
+
+
+/* Responsive */
+@media (max-width: 600px) {
+  .learn-hero {
+    padding-top: 110px;
+  }
+  .tip-card {
+    padding: 28px 24px;
+  }
+  .tip-num {
+    font-size: 36px;
+  }
+}
