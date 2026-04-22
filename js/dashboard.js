@@ -14,21 +14,21 @@
   'use strict';
 
   const TIER_THRESHOLDS = {
-    bronze:   { min: 0,     next: 'silver',   nextMin: 1000,  labelKey: 'tier.bronze' },
-    silver:   { min: 1000,  next: 'gold',     nextMin: 5000,  labelKey: 'tier.silver' },
-    gold:     { min: 5000,  next: 'platinum', nextMin: 20000, labelKey: 'tier.gold' },
-    platinum: { min: 20000, next: null,       nextMin: null,  labelKey: 'tier.platinum' }
+    bronze: { min: 0, next: 'silver', nextMin: 1000, labelKey: 'tier.bronze' },
+    silver: { min: 1000, next: 'gold', nextMin: 5000, labelKey: 'tier.silver' },
+    gold: { min: 5000, next: 'platinum', nextMin: 20000, labelKey: 'tier.gold' },
+    platinum: { min: 20000, next: null, nextMin: null, labelKey: 'tier.platinum' }
   };
 
   function t(key) {
     const lang = (window.Nuqta && window.Nuqta.getCurrentLang)
-                 ? window.Nuqta.getCurrentLang() : 'ar';
+      ? window.Nuqta.getCurrentLang() : 'ar';
     return (translations[lang] && translations[lang][key]) || key;
   }
 
   function fmt(num) {
     const lang = (window.Nuqta && window.Nuqta.getCurrentLang)
-                 ? window.Nuqta.getCurrentLang() : 'ar';
+      ? window.Nuqta.getCurrentLang() : 'ar';
     const locale = (lang === 'ar') ? 'ar-EG' : 'en-US';
     return Number(num).toLocaleString(locale);
   }
@@ -57,9 +57,9 @@
 
   // خريطة النجوم حسب المستوى
   const TIER_STARS = {
-    bronze:   '★',
-    silver:   '★★',
-    gold:     '★★★',
+    bronze: '★',
+    silver: '★★',
+    gold: '★★★',
     platinum: '★★★★'
   };
 
@@ -74,7 +74,7 @@
     const remainingLabelEl = document.getElementById('remainingLabel');
 
     if (currentTierEl) {
-      currentTierEl.textContent = t(tierInfo.labelKey);
+      currentTierEl.innerHTML = `${t(tierInfo.labelKey)} <span class="tier-stars">${TIER_STARS[profile.tier]}</span>`;
       currentTierEl.removeAttribute('data-i18n');
     }
 
@@ -133,7 +133,7 @@
     setText('statSaved', fmt(saved));
     setText('statDays', fmt(days));
 
-    ['statEarned','statRedeemed','statSaved','statDays'].forEach((id) => {
+    ['statEarned', 'statRedeemed', 'statSaved', 'statDays'].forEach((id) => {
       const el = document.getElementById(id);
       if (el) el.removeAttribute('data-counter');
     });
@@ -193,7 +193,7 @@
     const tierInfo = TIER_THRESHOLDS[profile.tier];
     const year = window.NuqtaUser.joinedYear(profile);
     const lang = (window.Nuqta && window.Nuqta.getCurrentLang)
-                 ? window.Nuqta.getCurrentLang() : 'ar';
+      ? window.Nuqta.getCurrentLang() : 'ar';
 
     const yearStr = (lang === 'ar')
       ? String(year).replace(/[0-9]/g, (d) => '٠١٢٣٤٥٦٧٨٩'[+d])
@@ -252,7 +252,7 @@
     if (!container || !window.NuqtaChallenges) return;
 
     const lang = (window.Nuqta && window.Nuqta.getCurrentLang)
-                 ? window.Nuqta.getCurrentLang() : 'en';
+      ? window.Nuqta.getCurrentLang() : 'en';
 
     let challenges = [];
     try {
