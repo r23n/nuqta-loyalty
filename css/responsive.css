@@ -936,3 +936,42 @@
     font-size: 16px;
   }
 }
+
+/* ============================================================
+   إصلاح Sign in في navbar على الموبايل
+   ------------------------------------------------------------
+   نخلي Sign in يظهر دايماً (مع تصغيره) بدل الاختفاء في الهامبرغر
+   ============================================================ */
+
+@media (max-width: 600px) {
+  /* نظهر nav-auth دايماً (للزائر فقط) */
+  .nav-auth[data-auth="anon"] {
+    display: flex !important;
+    gap: 6px !important;
+  }
+
+  /* تصغير الأزرار في navbar للموبايل */
+  .nav-auth .btn-nav {
+    padding: 6px 10px !important;
+    font-size: 11px !important;
+    min-width: 0 !important;
+  }
+
+  /* Sign in يكون فقط outline (شفاف) */
+  .nav-auth .btn-ghost.btn-nav {
+    border-width: 1px !important;
+  }
+
+  /* Join now يبقى مميّز */
+  .nav-auth .btn-primary.btn-nav {
+    padding: 6px 12px !important;
+  }
+}
+
+/* الشاشات الصغيرة جداً (<400px) */
+@media (max-width: 400px) {
+  .nav-auth .btn-nav {
+    padding: 5px 8px !important;
+    font-size: 10px !important;
+  }
+}
