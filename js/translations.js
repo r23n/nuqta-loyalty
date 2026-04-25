@@ -513,6 +513,15 @@ const translations = {
     'tx.empty.title': 'لا توجد معاملات',
     'tx.empty.desc': 'جرّب تعديل الفلاتر أو كلمات البحث.',
 
+    // 404 Page
+    'err404.meta': 'الصفحة غير موجودة — نُقطة',
+    'err404.title.1': 'عذراً!',
+    'err404.title.2': 'الصفحة غير موجودة',
+    'err404.sub': 'الصفحة التي تبحث عنها غير موجودة أو تم نقلها. لا تقلق — سنعيدك إلى المسار الصحيح.',
+    'err404.cta.home': '← الصفحة الرئيسية',
+    'err404.cta.dashboard': 'لوحتي',
+    'err404.suggest': 'أو تصفّح:',
+
     // Challenges
     'challenge.section.title': 'التحدّيات النشطة',
     'challenge.section.sub': 'أكمل التحدّيات لتحصل على نقاط إضافية',
@@ -1148,6 +1157,15 @@ const translations = {
     'tx.load.more': 'Load more',
     'tx.empty.title': 'No transactions found',
     'tx.empty.desc': 'Try adjusting your filters or search terms.',
+
+    // 404 Page
+    'err404.meta': 'Page not found — Nuqta',
+    'err404.title.1': 'Oops!',
+    'err404.title.2': 'page not found',
+    'err404.sub': "The page you're looking for doesn't exist or has been moved. Don't worry — let's get you back on track.",
+    'err404.cta.home': '← Back to home',
+    'err404.cta.dashboard': 'My dashboard',
+    'err404.suggest': 'Or visit:',
 
     // Challenges
     'challenge.section.title': 'Active challenges',

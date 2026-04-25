@@ -12,6 +12,7 @@
 @import url('components.css');
 @import url('components/toast.css');
 @import url('components/confetti.css');
+@import url('components/banner.css');
 
 /* 3. الأقسام العامة */
 @import url('sections.css');

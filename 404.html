@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+
+  <title data-i18n="err404.meta">Page not found — Nuqta</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400;500;600;700&family=Rubik:wght@300;400;500;600;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/css/main.css">
+
+  <script>
+    (function(){ try { var t=localStorage.getItem('nuqta_theme')||'dark'; document.documentElement.setAttribute('data-theme',t); } catch(e){} })();
+  </script>
+
+  <style>
+    .err-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .err-page::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 30%, rgba(201, 169, 97, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(107, 31, 46, 0.18) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .err-content {
+      max-width: 600px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .err-number {
+      font-family: var(--font-display);
+      font-size: clamp(120px, 22vw, 220px);
+      font-weight: 900;
+      line-height: 1;
+      background: linear-gradient(135deg, var(--gold), var(--gold-bright), var(--copper));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.04em;
+      margin-bottom: 8px;
+      filter: drop-shadow(0 4px 24px rgba(201, 169, 97, 0.2));
+      animation: err-float 4s ease-in-out infinite;
+    }
+
+    @keyframes err-float {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-8px); }
+    }
+
+    .err-emoji {
+      font-size: 56px;
+      margin-bottom: 20px;
+      display: inline-block;
+      animation: err-wobble 3s ease-in-out infinite;
+    }
+
+    @keyframes err-wobble {
+      0%, 100% { transform: rotate(-5deg); }
+      50%      { transform: rotate(5deg); }
+    }
+
+    .err-title {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 700;
+      color: var(--cream);
+      margin-bottom: 14px;
+      line-height: 1.2;
+    }
+
+    .err-title em {
+      font-family: var(--font-accent);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--gold-bright);
+    }
+
+    .err-sub {
+      font-size: 16px;
+      color: var(--cream-dim);
+      line-height: 1.6;
+      margin-bottom: 36px;
+      max-width: 420px;
+      margin-inline: auto;
+    }
+
+    .err-actions {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .err-actions .btn {
+      min-width: 160px;
+    }
+
+    .err-logo {
+      position: absolute;
+      top: 24px;
+      inset-inline-start: 24px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--cream);
+      text-decoration: none;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 18px;
+      z-index: 2;
+    }
+
+    .err-logo-mark {
+      color: var(--gold);
+      font-size: 20px;
+    }
+
+    .err-suggestions {
+      margin-top: 40px;
+      padding-top: 32px;
+      border-top: 1px solid var(--line);
+    }
+
+    .err-suggestions-title {
+      color: var(--cream-faint);
+      font-size: 13px;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .err-links {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .err-links a {
+      padding: 6px 14px;
+      background: rgba(201, 169, 97, 0.08);
+      border: 1px solid rgba(201, 169, 97, 0.2);
+      border-radius: var(--radius-pill);
+      color: var(--gold);
+      text-decoration: none;
+      font-size: 13px;
+      transition: all 0.2s;
+    }
+
+    .err-links a:hover {
+      background: rgba(201, 169, 97, 0.15);
+      border-color: var(--gold);
+      transform: translateY(-1px);
+    }
+
+    @media (max-width: 600px) {
+      .err-logo {
+        top: 16px;
+        inset-inline-start: 16px;
+        font-size: 16px;
+      }
+      .err-emoji { font-size: 44px; }
+      .err-actions {
+        flex-direction: column;
+        width: 100%;
+      }
+      .err-actions .btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <main class="err-page">
+    <a href="/" class="err-logo">
+      <span class="err-logo-mark">◆</span>
+      <span>Nuqta</span>
+    </a>
+
+    <div class="err-content">
+      <div class="err-emoji">🔍</div>
+      <div class="err-number">404</div>
+
+      <h1 class="err-title">
+        <span data-i18n="err404.title.1">Oops!</span>
+        <em data-i18n="err404.title.2">page not found</em>
+      </h1>
+
+      <p class="err-sub" data-i18n="err404.sub">
+        The page you're looking for doesn't exist or has been moved.
+        Don't worry — let's get you back on track.
+      </p>
+
+      <div class="err-actions">
+        <a href="/" class="btn btn-primary" data-i18n="err404.cta.home">
+          ← Back to home
+        </a>
+        <a href="/dashboard.html" class="btn btn-ghost" data-i18n="err404.cta.dashboard">
+          My dashboard
+        </a>
+      </div>
+
+      <div class="err-suggestions">
+        <div class="err-suggestions-title" data-i18n="err404.suggest">Or visit:</div>
+        <div class="err-links">
+          <a href="/rewards.html" data-i18n="nav.rewards">Rewards</a>
+          <a href="/learn.html" data-i18n="nav.learn">Earn more</a>
+          <a href="/pricing.html" data-i18n="nav.pricing">Pricing</a>
+          <a href="/profile.html" data-i18n="nav.profile">My profile</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="/js/translations.js"></script>
+  <script src="/js/theme.js"></script>
+  <script src="/js/i18n.js"></script>
+</body>
+</html>
