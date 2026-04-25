@@ -328,9 +328,16 @@
     white-space: nowrap;
   }
 
-  /* إخفاء زر Ghost في الهواتف الضيقة (نخلي زر واحد بس للمصادقة) */
-  .nav-auth .btn-ghost.btn-nav {
+/* في الهواتف: نخفي فقط زر Ghost للمسجّل (Sign out يكون بالـ hamburger) */
+  .nav-auth[data-auth="authed"] .btn-ghost.btn-nav {
     display: none;
+  }
+
+  /* للزائر: نُظهر Sign in بحجم مضغوط بجانب Join now */
+  .nav-auth[data-auth="anon"] .btn-ghost.btn-nav {
+    display: inline-flex;
+    padding: 6px 10px;
+    font-size: 11px;
   }
 
   /* تقليل حشوة الـ navbar عشان المساحة */
