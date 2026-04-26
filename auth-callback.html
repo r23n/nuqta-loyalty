@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+
+  <title data-i18n="cb.meta">Confirming — Nuqta</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#1a0e10">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400;500;600;700&family=Rubik:wght@300;400;500;600;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="preconnect" href="https://wyakavyesufquawqynbz.supabase.co" crossorigin>
+
+  <link rel="stylesheet" href="/css/main.css">
+
+  <script>
+    (function(){ try { var t=localStorage.getItem('nuqta_theme')||'dark'; document.documentElement.setAttribute('data-theme',t); } catch(e){} })();
+  </script>
+
+  <style>
+    .cb-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .cb-card {
+      max-width: 440px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .cb-icon {
+      font-size: 72px;
+      margin-bottom: 24px;
+      display: inline-block;
+    }
+
+    .cb-icon.is-loading {
+      animation: cb-spin 1s linear infinite;
+    }
+
+    @keyframes cb-spin {
+      0%   { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .cb-title {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--cream);
+      margin-bottom: 12px;
+    }
+
+    .cb-sub {
+      font-size: 15px;
+      color: var(--cream-dim);
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+
+    .cb-actions .btn { min-width: 200px; }
+  </style>
+</head>
+<body>
+
+  <main class="cb-page">
+    <div class="cb-card">
+      <div class="cb-icon is-loading" id="cbIcon">⏳</div>
+      <h1 class="cb-title" id="cbTitle" data-i18n="cb.loading.title">Confirming your email...</h1>
+      <p class="cb-sub" id="cbSub" data-i18n="cb.loading.sub">Just a moment, please.</p>
+      <div class="cb-actions" id="cbActions" style="display:none;"></div>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+  <script src="/js/supabase-config.js" defer></script>
+  <script src="/js/supabase-client.js" defer></script>
+  <script src="/js/translations.js" defer></script>
+  <script src="/js/theme.js" defer></script>
+  <script src="/js/i18n.js" defer></script>
+  <script src="/js/user.js" defer></script>
+
+  <script defer>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const icon = document.getElementById('cbIcon');
+      const title = document.getElementById('cbTitle');
+      const sub = document.getElementById('cbSub');
+      const actions = document.getElementById('cbActions');
+      const t = window.Nuqta?.t || ((k) => k);
+
+      // ننتظر شوي عشان Supabase يعالج التوكن من URL
+      await new Promise(r => setTimeout(r, 1500));
+
+      try {
+        // نتحقق من الجلسة
+        const session = await window.NuqtaUser.getSession();
+
+        if (!session) {
+          throw new Error('No session after callback');
+        }
+
+        // ننشئ الـ profile لو لم يُنشأ بعد
+        await window.NuqtaUser.completeProfileAfterVerification();
+
+        // نجاح!
+        icon.classList.remove('is-loading');
+        icon.textContent = '✅';
+        title.textContent = t('cb.success.title') || 'Email confirmed!';
+        sub.textContent = t('cb.success.sub') || 'Your account is now active. Choose your plan to continue.';
+
+        // ننظّف البيانات المؤقتة
+        try {
+          sessionStorage.removeItem('nuqta_verify_email');
+        } catch (e) {}
+
+        // نُعيد التوجيه بعد ٢ ثانية لـ pricing (إلزامي اختيار باقة)
+        setTimeout(() => {
+          window.location.href = 'pricing.html?onboarding=1';
+        }, 2000);
+
+      } catch (err) {
+        console.error('Auth callback error:', err);
+
+        icon.classList.remove('is-loading');
+        icon.textContent = '⚠️';
+        title.textContent = t('cb.error.title') || 'Confirmation failed';
+        sub.textContent = t('cb.error.sub') || 'The link may have expired or is invalid. Try signing in again.';
+
+        actions.style.display = 'block';
+        actions.innerHTML = `
+          <a href="/login.html" class="btn btn-primary">${t('cb.error.cta') || 'Back to sign in'}</a>
+        `;
+      }
+    });
+  </script>
+
+  <script src="/js/pwa.js" defer></script>
+</body>
+</html>

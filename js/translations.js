@@ -513,6 +513,42 @@ const translations = {
     'tx.empty.title': 'لا توجد معاملات',
     'tx.empty.desc': 'جرّب تعديل الفلاتر أو كلمات البحث.',
 
+    // 404 Page
+    'err404.meta': 'الصفحة غير موجودة — نُقطة',
+    'err404.title.1': 'عذراً!',
+    'err404.title.2': 'الصفحة غير موجودة',
+    'err404.sub': 'الصفحة التي تبحث عنها غير موجودة أو تم نقلها. لا تقلق — سنعيدك إلى المسار الصحيح.',
+    'err404.cta.home': '← الصفحة الرئيسية',
+    'err404.cta.dashboard': 'لوحتي',
+    'err404.suggest': 'أو تصفّح:',
+
+    // Email Verification — verify.html
+    'verify.meta': 'تأكيد البريد — نُقطة',
+    'verify.title.1': 'افحص بريدك',
+    'verify.title.2': 'لتفعيل حسابك',
+    'verify.sub': 'أرسلنا رابط تأكيد إلى:',
+    'verify.step.1': 'افتح البريد من نُقطة',
+    'verify.step.2': 'اضغط زر "تأكيد البريد"',
+    'verify.step.3': 'سيتم إعادة توجيهك تلقائياً',
+    'verify.cta.login': '← العودة لتسجيل الدخول',
+    'verify.resend.q': 'لم يصلك البريد؟',
+    'verify.resend.btn': 'إعادة إرسال',
+    'verify.resend.sending': 'جاري الإرسال...',
+    'verify.resend.wait': 'انتظر',
+    'verify.resend.success': 'تم الإرسال! افحص بريدك.',
+    'verify.err.no.email': 'لم يُحفظ البريد. سجّل من جديد.',
+    'verify.err.resend': 'فشل الإرسال. حاول مرة أخرى.',
+
+    // Auth Callback — auth-callback.html
+    'cb.meta': 'جاري التأكيد — نُقطة',
+    'cb.loading.title': 'جاري تأكيد بريدك...',
+    'cb.loading.sub': 'لحظة من فضلك',
+    'cb.success.title': 'تم تأكيد البريد!',
+    'cb.success.sub': 'حسابك مفعّل الآن. اختر باقتك للمتابعة.',
+    'cb.error.title': 'فشل التأكيد',
+    'cb.error.sub': 'الرابط منتهي الصلاحية أو غير صحيح. حاول تسجيل الدخول من جديد.',
+    'cb.error.cta': 'العودة لتسجيل الدخول',
+
     // Challenges
     'challenge.section.title': 'التحدّيات النشطة',
     'challenge.section.sub': 'أكمل التحدّيات لتحصل على نقاط إضافية',
@@ -1148,6 +1184,42 @@ const translations = {
     'tx.load.more': 'Load more',
     'tx.empty.title': 'No transactions found',
     'tx.empty.desc': 'Try adjusting your filters or search terms.',
+
+    // 404 Page
+    'err404.meta': 'Page not found — Nuqta',
+    'err404.title.1': 'Oops!',
+    'err404.title.2': 'page not found',
+    'err404.sub': "The page you're looking for doesn't exist or has been moved. Don't worry — let's get you back on track.",
+    'err404.cta.home': '← Back to home',
+    'err404.cta.dashboard': 'My dashboard',
+    'err404.suggest': 'Or visit:',
+
+    // Email Verification — verify.html
+    'verify.meta': 'Verify your email — Nuqta',
+    'verify.title.1': 'Check your inbox',
+    'verify.title.2': 'to activate your account',
+    'verify.sub': 'We sent a verification link to:',
+    'verify.step.1': 'Open the email from Nuqta',
+    'verify.step.2': 'Click the "Confirm your email" button',
+    'verify.step.3': "You'll be redirected here automatically",
+    'verify.cta.login': '← Back to sign in',
+    'verify.resend.q': "Didn't get the email?",
+    'verify.resend.btn': 'Resend',
+    'verify.resend.sending': 'Sending...',
+    'verify.resend.wait': 'Wait',
+    'verify.resend.success': 'Email sent! Check your inbox.',
+    'verify.err.no.email': 'No email saved. Please sign up again.',
+    'verify.err.resend': 'Failed to resend. Try again.',
+
+    // Auth Callback — auth-callback.html
+    'cb.meta': 'Confirming — Nuqta',
+    'cb.loading.title': 'Confirming your email...',
+    'cb.loading.sub': 'Just a moment, please.',
+    'cb.success.title': 'Email confirmed!',
+    'cb.success.sub': 'Your account is now active. Choose your plan to continue.',
+    'cb.error.title': 'Confirmation failed',
+    'cb.error.sub': 'The link may have expired or is invalid. Try signing in again.',
+    'cb.error.cta': 'Back to sign in',
 
     // Challenges
     'challenge.section.title': 'Active challenges',

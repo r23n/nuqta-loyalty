@@ -1,0 +1,42 @@
+# ============================================================
+# Netlify Headers — تحسين الأداء والأمان
+# ============================================================
+
+# CSS files: كاش لمدة سنة
+/css/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# JavaScript files: كاش يومي مع revalidation
+/js/*
+  Cache-Control: public, max-age=86400, must-revalidate
+
+# Service Worker: لا تكاش (دائماً نزّله جديد)
+/sw.js
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Manifest: كاش يومي
+/manifest.json
+  Cache-Control: public, max-age=86400, must-revalidate
+
+# Icons: كاش طويل
+/icons/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Assets
+/assets/*
+  Cache-Control: public, max-age=2592000
+
+# HTML pages: كاش قصير
+/*.html
+  Cache-Control: public, max-age=300, must-revalidate
+
+# الصفحة الرئيسية
+/
+  Cache-Control: public, max-age=300, must-revalidate
+
+# Security Headers لكل الموقع
+/*
+  X-Frame-Options: SAMEORIGIN
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()

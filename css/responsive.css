@@ -950,13 +950,7 @@
    ============================================================ */
 
 @media (max-width: 600px) {
-  /* نظهر nav-auth دايماً (للزائر فقط) */
-  .nav-auth[data-auth="anon"] {
-    display: flex !important;
-    gap: 6px !important;
-  }
-
-  /* تصغير الأزرار في navbar للموبايل */
+  /* تصغير الأزرار في navbar للموبايل (بدون فرض display — JS يتحكم به) */
   .nav-auth .btn-nav {
     padding: 6px 10px !important;
     font-size: 11px !important;
@@ -979,5 +973,44 @@
   .nav-auth .btn-nav {
     padding: 5px 8px !important;
     font-size: 10px !important;
+  }
+}
+
+/* ============================================================
+   إصلاح نهائي للـ navbar في الموبايل
+   ------------------------------------------------------------
+   - زائر: نظهر Sign in فقط (نخفي Join now عشان يحفظ مساحة)
+   - مسجّل: نخفي كل زرّي nav-auth (Dashboard + Sign out)
+     ونعرضهم بدل ذلك داخل قائمة الهامبرغر
+   ============================================================ */
+
+@media (max-width: 768px) {
+  /* زائر: نخفي زر Join now ونحتفظ بـ Sign in فقط */
+  .nav-auth[data-auth="anon"] .btn-primary.btn-nav {
+    display: none;
+  }
+
+  /* مسجّل: نخفي كل nav-auth — بديلها داخل القائمة */
+  .nav-auth[data-auth="authed"] {
+    display: none !important;
+  }
+}
+
+/* أضف زر "تسجيل الخروج" داخل قائمة الهامبرغر للمسجّل */
+.nav-links .mobile-signout {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .nav-links .mobile-signout {
+    display: block;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+  }
+
+  .nav-links .mobile-signout a {
+    color: #e07070 !important;
+    font-weight: 600;
   }
 }

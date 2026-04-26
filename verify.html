@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+
+  <title data-i18n="verify.meta">Verify your email — Nuqta</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#1a0e10">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400;500;600;700&family=Rubik:wght@300;400;500;600;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="preconnect" href="https://wyakavyesufquawqynbz.supabase.co" crossorigin>
+
+  <link rel="stylesheet" href="/css/main.css">
+
+  <script>
+    (function(){ try { var t=localStorage.getItem('nuqta_theme')||'dark'; document.documentElement.setAttribute('data-theme',t); } catch(e){} })();
+  </script>
+
+  <style>
+    .verify-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .verify-page::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 30% 20%, rgba(201, 169, 97, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 70% 80%, rgba(107, 31, 46, 0.2) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .verify-card {
+      max-width: 480px;
+      width: 100%;
+      background: var(--bg-card, rgba(40, 22, 24, 0.85));
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      padding: 40px 32px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    }
+
+    .verify-icon {
+      font-size: 64px;
+      margin-bottom: 20px;
+      display: inline-block;
+      animation: verify-bounce 2s ease-in-out infinite;
+    }
+
+    @keyframes verify-bounce {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-8px); }
+    }
+
+    .verify-title {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--cream);
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+
+    .verify-title em {
+      font-family: var(--font-accent);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--gold-bright);
+    }
+
+    .verify-sub {
+      font-size: 15px;
+      color: var(--cream-dim);
+      line-height: 1.7;
+      margin-bottom: 8px;
+    }
+
+    .verify-email {
+      font-family: var(--font-mono, monospace);
+      color: var(--gold);
+      font-weight: 600;
+      font-size: 16px;
+      margin-bottom: 28px;
+      padding: 10px 16px;
+      background: rgba(201, 169, 97, 0.08);
+      border-radius: var(--radius-sm);
+      display: inline-block;
+      direction: ltr;
+      word-break: break-all;
+    }
+
+    .verify-steps {
+      text-align: start;
+      background: rgba(244, 234, 213, 0.04);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      margin-bottom: 24px;
+    }
+
+    .verify-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+      color: var(--cream-dim);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .verify-step:last-child {
+      margin-bottom: 0;
+    }
+
+    .verify-step-num {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold), var(--gold-bright));
+      color: var(--ink);
+      font-weight: 700;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .verify-actions {
+      display: flex;
+      gap: 12px;
+      flex-direction: column;
+    }
+
+    .verify-resend-wrap {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+      color: var(--cream-faint);
+      font-size: 13px;
+    }
+
+    .verify-resend-link {
+      color: var(--gold);
+      background: none;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 4px 8px;
+      font-size: 13px;
+    }
+
+    .verify-resend-link:hover {
+      text-decoration: underline;
+    }
+
+    .verify-resend-link:disabled {
+      color: var(--cream-faint);
+      cursor: not-allowed;
+      text-decoration: none;
+    }
+
+    .verify-message {
+      margin-top: 16px;
+      padding: 10px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      display: none;
+    }
+
+    .verify-message.is-success {
+      background: rgba(76, 175, 80, 0.1);
+      color: #81c784;
+      display: block;
+    }
+
+    .verify-message.is-error {
+      background: rgba(244, 67, 54, 0.1);
+      color: #e57373;
+      display: block;
+    }
+
+    @media (max-width: 480px) {
+      .verify-card { padding: 32px 20px; }
+      .verify-icon { font-size: 52px; }
+      .verify-title { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+
+  <main class="verify-page">
+    <div class="verify-card">
+      <div class="verify-icon">📬</div>
+
+      <h1 class="verify-title">
+        <span data-i18n="verify.title.1">Check your inbox</span>
+        <em data-i18n="verify.title.2">to activate your account</em>
+      </h1>
+
+      <p class="verify-sub" data-i18n="verify.sub">We sent a verification link to:</p>
+
+      <div class="verify-email" id="verifyEmail">your@email.com</div>
+
+      <div class="verify-steps">
+        <div class="verify-step">
+          <div class="verify-step-num">1</div>
+          <div data-i18n="verify.step.1">Open the email from Nuqta</div>
+        </div>
+        <div class="verify-step">
+          <div class="verify-step-num">2</div>
+          <div data-i18n="verify.step.2">Click the "Confirm your email" button</div>
+        </div>
+        <div class="verify-step">
+          <div class="verify-step-num">3</div>
+          <div data-i18n="verify.step.3">You'll be redirected here automatically</div>
+        </div>
+      </div>
+
+      <div class="verify-actions">
+        <a href="/login.html" class="btn btn-ghost" data-i18n="verify.cta.login">
+          ← Back to sign in
+        </a>
+      </div>
+
+      <div class="verify-resend-wrap">
+        <span data-i18n="verify.resend.q">Didn't get the email?</span>
+        <button class="verify-resend-link" id="resendBtn" data-i18n="verify.resend.btn">
+          Resend
+        </button>
+      </div>
+
+      <div class="verify-message" id="verifyMsg"></div>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+  <script src="/js/supabase-config.js" defer></script>
+  <script src="/js/supabase-client.js" defer></script>
+  <script src="/js/translations.js" defer></script>
+  <script src="/js/theme.js" defer></script>
+  <script src="/js/i18n.js" defer></script>
+  <script src="/js/user.js" defer></script>
+
+  <script defer>
+    document.addEventListener('DOMContentLoaded', () => {
+      // اعرض الإيميل
+      try {
+        const email = sessionStorage.getItem('nuqta_verify_email') || '';
+        if (email) document.getElementById('verifyEmail').textContent = email;
+      } catch (e) {}
+
+      // زر إعادة الإرسال
+      const btn = document.getElementById('resendBtn');
+      const msg = document.getElementById('verifyMsg');
+
+      btn.addEventListener('click', async () => {
+        const email = sessionStorage.getItem('nuqta_verify_email');
+        if (!email) {
+          msg.className = 'verify-message is-error';
+          msg.textContent = window.Nuqta?.t('verify.err.no.email') || 'No email saved. Please sign up again.';
+          return;
+        }
+
+        btn.disabled = true;
+        btn.textContent = window.Nuqta?.t('verify.resend.sending') || 'Sending...';
+
+        try {
+          await window.NuqtaUser.resendVerificationEmail(email);
+          msg.className = 'verify-message is-success';
+          msg.textContent = window.Nuqta?.t('verify.resend.success') || 'Email sent! Check your inbox.';
+
+          // نمنع spam
+          let countdown = 60;
+          const interval = setInterval(() => {
+            countdown--;
+            if (countdown <= 0) {
+              clearInterval(interval);
+              btn.disabled = false;
+              btn.textContent = window.Nuqta?.t('verify.resend.btn') || 'Resend';
+            } else {
+              btn.textContent = (window.Nuqta?.t('verify.resend.wait') || 'Wait') + ' ' + countdown + 's';
+            }
+          }, 1000);
+        } catch (err) {
+          console.error('Resend error:', err);
+          msg.className = 'verify-message is-error';
+          msg.textContent = window.Nuqta?.t('verify.err.resend') || 'Failed to resend. Try again.';
+          btn.disabled = false;
+          btn.textContent = window.Nuqta?.t('verify.resend.btn') || 'Resend';
+        }
+      });
+    });
+  </script>
+
+  <script src="/js/pwa.js" defer></script>
+</body>
+</html>

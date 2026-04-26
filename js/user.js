@@ -44,14 +44,36 @@
   async function signUp({ name, email, password, phone, interests, referredBy }) {
     const { data: authData, error: authError } = await sb().auth.signUp({
       email: email,
-      password: password
+      password: password,
+      options: {
+        // الرابط اللي يرجع له المستخدم بعد التأكيد
+        emailRedirectTo: window.location.origin + '/auth-callback.html',
+        data: {
+          name: name,
+          phone: phone || null
+        }
+      }
     });
 
     if (authError) throw authError;
     if (!authData.user) throw new Error('فشل التسجيل');
 
-    // نُنشئ الـ profile row مع referred_by لو موجود
-    // (الـ trigger على جدول profiles يعطي ٢٠٠ نقطة لكلا الطرفين تلقائياً)
+    // ⚠️ مع تفعيل Email Verification، authData.session = null
+    // لا نقدر ننشئ profile الآن (لأن RLS تتطلب جلسة نشطة)
+    // لذلك نخزّن البيانات مؤقتاً ونُكمل في auth-callback.html بعد التأكيد
+
+    if (!authData.session) {
+      // البريد يحتاج تأكيد — نخزّن البيانات الإضافية مؤقتاً
+      try {
+        sessionStorage.setItem('nuqta_pending_profile', JSON.stringify({
+          name, phone, interests, referredBy
+        }));
+      } catch (e) {}
+
+      return { user: authData.user, needsVerification: true };
+    }
+
+    // إذا الجلسة موجودة (Email Verification معطّلة في Supabase)، ننشئ profile مباشرة
     const profileData = {
       id: authData.user.id,
       name: name,
@@ -73,7 +95,71 @@
       throw profileError;
     }
 
-    return authData;
+    return { user: authData.user, needsVerification: false };
+  }
+
+  // إنشاء profile بعد تأكيد البريد (يُستدعى من auth-callback.html)
+  async function completeProfileAfterVerification() {
+    const session = await getSession();
+    if (!session) throw new Error('No session');
+
+    // نشوف لو فيه profile بالفعل
+    const { data: existing } = await sb()
+      .from('profiles')
+      .select('id')
+      .eq('id', session.user.id)
+      .maybeSingle();
+
+    if (existing) return existing; // موجود، لا حاجة لإنشائه
+
+    // نقرأ البيانات المؤقتة
+    let pending = {};
+    try {
+      pending = JSON.parse(sessionStorage.getItem('nuqta_pending_profile') || '{}');
+    } catch (e) {}
+
+    // ⚠️ Fallback: لو ما في pending data (مثلاً المستخدم فتح الرابط على جهاز ثاني)
+    // نستخدم البيانات اللي خزّنها Supabase في raw_user_meta_data
+    const meta = session.user.user_metadata || {};
+    const name = pending.name || meta.name || (session.user.email || '').split('@')[0];
+    const phone = pending.phone || meta.phone || null;
+    const interests = pending.interests || [];
+    const referredBy = pending.referredBy || null;
+
+    const profileData = {
+      id: session.user.id,
+      name: name,
+      phone: phone,
+      interests: interests,
+      points: 100
+    };
+
+    if (referredBy) profileData.referred_by = referredBy;
+
+    const { data: created, error } = await sb()
+      .from('profiles')
+      .insert(profileData)
+      .select()
+      .single();
+
+    if (error) throw error;
+
+    // نحذف البيانات المؤقتة
+    try { sessionStorage.removeItem('nuqta_pending_profile'); } catch (e) {}
+
+    return created;
+  }
+
+  // إعادة إرسال بريد التأكيد
+  async function resendVerificationEmail(email) {
+    const { error } = await sb().auth.resend({
+      type: 'signup',
+      email: email,
+      options: {
+        emailRedirectTo: window.location.origin + '/auth-callback.html'
+      }
+    });
+    if (error) throw error;
   }
 
   // تسجيل دخول
@@ -360,6 +446,8 @@
     signUp,
     signIn,
     signOut,
+    completeProfileAfterVerification,
+    resendVerificationEmail,
     requestPasswordReset,
     updatePassword,
 

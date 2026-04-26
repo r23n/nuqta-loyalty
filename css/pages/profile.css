@@ -76,36 +76,9 @@
 
 
 /* ============================================================
-   Skeleton Loaders
+   Skeleton helpers خاصة بـ Profile
+   (الـ skeleton الأساسية في components/skeleton.css)
    ============================================================ */
-.skeleton {
-  background: var(--bg-elevated);
-  animation: skeleton-pulse 1.5s ease-in-out infinite;
-  border-radius: var(--radius-sm);
-  will-change: opacity;
-}
-
-.skeleton-line {
-  height: 60px;
-  margin-bottom: 16px;
-}
-
-.skeleton-box {
-  height: 200px;
-  margin-bottom: 24px;
-}
-
-.skeleton-circle {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-}
-
-@keyframes skeleton-pulse {
-  0%, 100% { opacity: 0.5; }
-  50%      { opacity: 1; }
-}
-
 .profile-loading {
   padding: 24px 0;
 }

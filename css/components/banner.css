@@ -1,0 +1,111 @@
+/* ============================================================
+   banner.css — شريط التنبيهات
+   ============================================================ */
+
+.top-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  background: linear-gradient(90deg, var(--gold), var(--gold-bright), var(--gold));
+  background-size: 200% 100%;
+  animation: banner-shimmer 6s ease-in-out infinite;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 12px rgba(201, 169, 97, 0.25);
+}
+
+@keyframes banner-shimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+
+.top-banner-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 10px 50px 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+.top-banner-text {
+  text-align: center;
+  line-height: 1.4;
+}
+
+.top-banner-cta {
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 700;
+  padding: 4px 12px;
+  background: rgba(26, 14, 16, 0.15);
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+
+.top-banner-cta:hover {
+  background: rgba(26, 14, 16, 0.25);
+}
+
+.top-banner-close {
+  position: absolute;
+  inset-inline-end: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: var(--ink);
+  font-size: 22px;
+  font-weight: 700;
+  cursor: pointer;
+  line-height: 1;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.2s;
+}
+
+.top-banner-close:hover {
+  background: rgba(26, 14, 16, 0.15);
+}
+
+/* تعديل navbar لما يكون فيه banner */
+body.has-banner .navbar {
+  top: 40px;
+}
+
+/* RTL */
+[dir="rtl"] .top-banner-close {
+  inset-inline-end: auto;
+  inset-inline-start: 12px;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .top-banner-inner {
+    padding: 8px 40px 8px 12px;
+    gap: 8px;
+    font-size: 12px;
+  }
+
+  .top-banner-cta {
+    padding: 3px 10px;
+    font-size: 11px;
+  }
+
+  body.has-banner .navbar {
+    top: 50px;
+  }
+}

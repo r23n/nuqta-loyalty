@@ -68,6 +68,17 @@
       const raw = (err.message || '').toLowerCase();
 
       let msg = t('login.err.generic');
+
+      // ⚠️ Email not confirmed
+      if (raw.includes('email not confirmed') || raw.includes('not confirmed')) {
+        // نحفظ الإيميل ونوجّه لـ verify
+        try {
+          sessionStorage.setItem('nuqta_verify_email', email);
+        } catch (e) {}
+        window.location.href = 'verify.html?from=login';
+        return;
+      }
+
       if (raw.includes('invalid') || raw.includes('credentials')) {
         msg = t('login.err.invalid');
       } else if (raw.includes('not found') || raw.includes('user')) {

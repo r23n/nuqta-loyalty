@@ -6,10 +6,26 @@
   <meta name="description" content="Your Nuqta transaction history.">
 
   <title data-i18n="tx.meta">Transaction history — Nuqta</title>
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#1a0e10">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Nuqta">
+
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400;500;600;700&family=Rubik:wght@300;400;500;600;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Preconnect للخدمات الخارجية (يحسّن السرعة) -->
+  <link rel="preconnect" href="https://wyakavyesufquawqynbz.supabase.co" crossorigin>
+  <link rel="preconnect" href="https://api.qrserver.com" crossorigin>
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+
 
   <link rel="stylesheet" href="css/main.css">
 
@@ -17,9 +33,9 @@
     (function(){ try { var t=localStorage.getItem('nuqta_theme')||'dark'; document.documentElement.setAttribute('data-theme',t); } catch(e){} })();
   </script>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="js/supabase-config.js"></script>
-  <script src="js/supabase-client.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+  <script src="js/supabase-config.js" defer></script>
+  <script src="js/supabase-client.js" defer></script>
 </head>
 <body>
 
@@ -36,6 +52,7 @@
         <li><a href="transactions.html" class="active" data-i18n="nav.transactions">History</a></li>
         <li><a href="rewards.html" data-i18n="nav.rewards">Rewards</a></li>
         <li><a href="profile.html" data-i18n="nav.profile">My profile</a></li>
+        <li class="mobile-signout" data-auth="authed"><a href="#" data-action="signout" data-i18n="dashboard.logout">Sign out</a></li>
       </ul>
 
       <div class="nav-actions">
@@ -130,14 +147,15 @@
 
 
   <!-- السكربتات -->
-  <script src="js/translations.js"></script>
-  <script src="js/theme.js"></script>
-  <script src="js/user.js"></script>
-  <script src="js/auth-ui.js"></script>
-  <script src="js/toast.js"></script>
-  <script src="js/i18n.js"></script>
-  <script src="js/nav.js"></script>
-  <script src="js/transactions.js"></script>
-  <script src="js/main.js"></script>
+  <script src="js/translations.js" defer></script>
+  <script src="js/theme.js" defer></script>
+  <script src="js/user.js" defer></script>
+  <script src="js/auth-ui.js" defer></script>
+  <script src="js/toast.js" defer></script>
+  <script src="js/i18n.js" defer></script>
+  <script src="js/nav.js" defer></script>
+  <script src="js/transactions.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="/js/pwa.js" defer></script>
 </body>
 </html>

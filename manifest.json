@@ -1,0 +1,51 @@
+{
+  "name": "Nuqta — Bahrain Loyalty",
+  "short_name": "Nuqta",
+  "description": "Earn points, redeem rewards from Bahrain's finest stores",
+  "start_url": "/index.html",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#1a0e10",
+  "theme_color": "#1a0e10",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": ["lifestyle", "shopping", "finance"],
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "My dashboard",
+      "short_name": "Dashboard",
+      "description": "View your points and progress",
+      "url": "/dashboard.html",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Rewards",
+      "short_name": "Rewards",
+      "description": "Browse and redeem rewards",
+      "url": "/rewards.html",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    }
+  ],
+  "prefer_related_applications": false
+}

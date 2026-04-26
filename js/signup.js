@@ -156,7 +156,7 @@
         ? window.NuqtaReferral.getPending()
         : null;
 
-      const authData = await window.NuqtaUser.signUp({
+      const result = await window.NuqtaUser.signUp({
         name: state.data.name,
         email: state.data.email,
         password: state.data.password,
@@ -170,7 +170,17 @@
         window.NuqtaReferral.clearPending();
       }
 
-      // نجاح → شاشة الترحيب
+      // لو البريد يحتاج تأكيد → نروح لصفحة verify
+      if (result && result.needsVerification) {
+        // نحفظ الإيميل ليستخدمها verify.html
+        try {
+          sessionStorage.setItem('nuqta_verify_email', state.data.email);
+        } catch (e) {}
+        window.location.href = 'verify.html';
+        return;
+      }
+
+      // نجاح بدون تأكيد بريد (لو الميزة معطّلة) → شاشة الترحيب الأصلية
       document.querySelector('.signup-card').style.display = 'none';
       document.querySelector('.signup-success').classList.add('is-visible');
 
